@@ -1,0 +1,156 @@
+<s:schema xmlns:s="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" 
+	targetNamespace="http://OpsysWeb.eu/" xmlns:tns="http://OpsysWeb.eu/">
+	<s:element name="ValidateOrderFromOrderXml">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="1" maxOccurs="1" name="loginInfo"
+					type="tns:VWLoginInfo" /> 
+				<s:element minOccurs="0" maxOccurs="1" name="orderxml"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="VWLoginInfo">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="1" name="userName"
+				type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="passWord"
+				type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="locale" type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="sessionId"
+				type="s:string" />
+		</s:sequence>
+	</s:complexType>
+	<s:element name="ValidateOrderFromOrderXmlResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1"
+					name="ValidateOrderFromOrderXmlResult" type="tns:ArrayOfErrorMessage" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="ArrayOfErrorMessage">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="unbounded" name="ErrorMessage"
+				nillable="true" type="tns:ErrorMessage" />
+		</s:sequence>
+	</s:complexType>
+	<s:complexType name="ErrorMessage">
+		<s:sequence>
+			<s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:EventType" />
+			<s:element minOccurs="0" maxOccurs="1" name="GeneratingMemberName"
+				type="s:string" />
+			<s:element minOccurs="1" maxOccurs="1" name="InternalID"
+				type="s:int" />
+			<s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+		</s:sequence>
+	</s:complexType>
+	<s:simpleType name="EventType">
+		<s:restriction base="s:string">
+			<s:enumeration value="Fatal" />
+			<s:enumeration value="Error" />
+			<s:enumeration value="Warning" />
+			<s:enumeration value="Info" />
+			<s:enumeration value="Internal" />
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="ValidateOrderFromPMS">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="locale" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="sloId" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="orderFile"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="traceFile"
+					type="s:base64Binary" />
+				<s:element minOccurs="0" maxOccurs="1" name="orderFileName"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="ValidateOrderFromPMSResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1"
+					name="ValidateOrderFromPMSResult" type="tns:ArrayOfOrderError" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="ArrayOfOrderError">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="unbounded" name="OrderError"
+				nillable="true" type="tns:OrderError" />
+		</s:sequence>
+	</s:complexType>
+	<s:complexType name="OrderError">
+		<s:sequence>
+			<s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+			<s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+			<s:element minOccurs="1" maxOccurs="1" name="Severity"
+				type="tns:EventType" />
+		</s:sequence>
+	</s:complexType>
+	<s:element name="ValidateQuotation">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="locale" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="sloId" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="orderFile"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="traceFile"
+					type="s:base64Binary" />
+				<s:element minOccurs="0" maxOccurs="1" name="orderFileName"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="ValidateQuotationResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1"
+					name="ValidateQuotationResult" type="tns:QuotationResults" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="QuotationResults">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="1" name="Calculation"
+				type="tns:CalculationResults" />
+			<s:element minOccurs="0" maxOccurs="1" name="Errors"
+				type="tns:ArrayOfOrderError" />
+		</s:sequence>
+	</s:complexType>
+	<s:complexType name="CalculationResults">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="1" name="CalculationImage"
+				type="s:base64Binary" />
+			<s:element minOccurs="0" maxOccurs="1" name="Left"
+				type="tns:Calculation" />
+			<s:element minOccurs="0" maxOccurs="1" name="Right"
+				type="tns:Calculation" />
+		</s:sequence>
+	</s:complexType>
+	<s:complexType name="Calculation">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="1" name="Diameter"
+				type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="LensBase"
+				type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="CenterThickness"
+				type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="Weight" type="s:string" />
+		</s:sequence>
+	</s:complexType>
+</s:schema>

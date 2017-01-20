@@ -1,0 +1,1155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	version="1.5.1">
+	<xs:element name="b2bOptic">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="header" type="Header" />
+				<xs:element name="items">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="item" type="Item" maxOccurs="unbounded" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="experimental" type="xs:anyType"
+					minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="AdditionRefractionMethod">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FRONT" />
+			<xs:enumeration value="BACK" />
+			<xs:enumeration value="ASWORN" />
+			<xs:enumeration value="PHOROPTER" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AngleDimension">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DEG" />
+			<xs:enumeration value="RAD" />
+			<xs:enumeration value="MM" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ApplianceWeightUnity">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PERCENT" />
+			<xs:enumeration value="VALUE" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BevelPosType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AUTO" />
+			<xs:enumeration value="FRONT" />
+			<xs:enumeration value="BACK" />
+			<xs:enumeration value="RELATION" />
+			<xs:enumeration value="FRAMECURVATURE" />
+			<xs:enumeration value="FRAMEBASE" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BevelTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BEVEL" />
+			<xs:enumeration value="FLAT" />
+			<xs:enumeration value="GROOVED" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ChamferIntensity">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="THIN" />
+			<xs:enumeration value="MEDIUM" />
+			<xs:enumeration value="LARGE" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ChamferPos">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BOTH" />
+			<xs:enumeration value="FRONT" />
+			<xs:enumeration value="BACK" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CoatingTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="COLOR" />
+			<xs:enumeration value="UV" />
+			<xs:enumeration value="ANTIREFLEX" />
+			<xs:enumeration value="HARD" />
+			<xs:enumeration value="CLEAN" />
+			<xs:enumeration value="OTHER" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EdgingType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ROUGHING" />
+			<xs:enumeration value="ONSHAPE" />
+			<xs:enumeration value="GIVENFRAME" />
+			<xs:enumeration value="ORDEREDFRAME" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FittingPlace">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MANUFACTURER" />
+			<xs:enumeration value="LAB" />
+			<xs:enumeration value="SHOP" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FrameMaterials">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="METAL" />
+			<xs:enumeration value="PLASTIC" />
+			<xs:enumeration value="OPTYL" />
+			<xs:enumeration value="NYLOR" />
+			<xs:enumeration value="DRILLED" />
+			<xs:enumeration value="SPECIAL" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Gender">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MALE" />
+			<xs:enumeration value="FEMALE" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HeightReferences">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OVERBOX" />
+			<xs:enumeration value="OVERSHAPE" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MsgStates">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NEW" />
+			<xs:enumeration value="UPDATE" />
+			<xs:enumeration value="CANCEL" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MsgSteps">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CREATE" />
+			<xs:enumeration value="TRANSFER" />
+			<xs:enumeration value="RECEIPT" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MsgTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ORDER" />
+			<xs:enumeration value="REQUEST" />
+			<xs:enumeration value="CALCULATION" />
+			<xs:enumeration value="VALIDATION" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OCReferences">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FAR" />
+			<xs:enumeration value="NEAR" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Roles">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ORIGINATOR" />
+			<xs:enumeration value="SUPPLIER" />
+			<xs:enumeration value="SHIPTO" />
+			<xs:enumeration value="CARRIER" />
+			<xs:enumeration value="INVOICETO" />
+			<xs:enumeration value="PAIDBY" />
+			<xs:enumeration value="MANUFACTURER" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RCDReferences">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CORNEA" />
+			<xs:enumeration value="FRAME" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RxDataReferences">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OBJECTIVE" />
+			<xs:enumeration value="SUBJECTIVE" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Sides">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RIGHT" />
+			<xs:enumeration value="LEFT" />
+			<xs:enumeration value="UNDEFINED" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SidesSimple">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RIGHT" />
+			<xs:enumeration value="LEFT" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SoftwareTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ORIGINATOR" />
+			<xs:enumeration value="VERIFIER" />
+			<xs:enumeration value="SENDER" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ThicknessReferences">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="REDUCEWITHSHAPE" />
+			<xs:enumeration value="CENTER" />
+			<xs:enumeration value="EDGE" />
+			<xs:enumeration value="DRILLHOLE" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TracerBinaryFormat">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DLL BRIOT" />
+			<xs:enumeration value="DVI" />
+			<xs:enumeration value="GT3000" />
+			<xs:enumeration value="MO1" />
+			<xs:enumeration value="NIDEK" />
+			<xs:enumeration value="OMA3.02" />
+			<xs:enumeration value="PHI" />
+			<xs:enumeration value="T4" />
+			<xs:enumeration value="WECO" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TracerType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Hoya 3DFT" />
+			<xs:enumeration value="Hoya GT1000" />
+			<xs:enumeration value="Hoya GT3000" />
+			<xs:enumeration value="Hoya GT3000 OMA" />
+			<xs:enumeration value="Hoya UT1000" />
+			<xs:enumeration value="Essilor Gamma" />
+			<xs:enumeration value="Essilor PHI PCCOM" />
+			<xs:enumeration value="Essilor PHI OMA" />
+			<xs:enumeration value="Essilor Kappa PCCOM" />
+			<xs:enumeration value="Essilor Kappa OMA" />
+			<xs:enumeration value="National Optronics 4T" />
+			<xs:enumeration value="Briot ScanfomNet I" />
+			<xs:enumeration value="Briot ScanfomNet II" />
+			<xs:enumeration value="Weco 3DFT+" />
+			<xs:enumeration value="Weco Trace II" />
+			<xs:enumeration value="Weco Trace III" />
+			<xs:enumeration value="Nidek LT700" />
+			<xs:enumeration value="Nidek LT900" />
+			<xs:enumeration value="Nidek LT900 OMA" />
+			<xs:enumeration value="Nidek LT1000" />
+			<xs:enumeration value="Indo NDK" />
+			<xs:enumeration value="Indo OMA" />
+			<xs:enumeration value="Topcon FR50" />
+			<xs:enumeration value="Takubomatic FD80" />
+			<xs:enumeration value="Unknown" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Account">
+		<xs:sequence>
+			<xs:element name="id">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="memberShipID" type="xs:long"
+								use="optional" default="1" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="name" type="xs:string" minOccurs="0" />
+			<xs:element name="address" type="Address" minOccurs="0" />
+			<xs:element name="contact" type="ContactInfo" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Address">
+		<xs:sequence>
+			<xs:element name="addressLine" type="xs:string" minOccurs="0"
+				maxOccurs="3" />
+			<xs:element name="poBox" type="xs:string" minOccurs="0" />
+			<xs:element name="city" type="xs:string" minOccurs="0" />
+			<xs:element name="zip" type="xs:string" minOccurs="0" />
+			<xs:element name="countryCode" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ApplianceWeight">
+		<xs:sequence>
+			<xs:element name="weightingNear" type="xs:float"
+				minOccurs="0" />
+			<xs:element name="weightingMiddle" type="xs:float"
+				minOccurs="0" />
+			<xs:element name="weightingFar" type="xs:float" minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="applianceWeightUnity" type="ApplianceWeightUnity"
+			use="required" />
+	</xs:complexType>
+	<xs:complexType name="Bevel">
+		<xs:sequence>
+			<xs:element name="type" type="BevelTypes" />
+			<xs:element name="position" minOccurs="0" maxOccurs="2">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:float">
+							<xs:attribute name="posType" type="BevelPosType"
+								use="optional" default="AUTO" />
+							<xs:attribute name="side" type="Sides" use="optional" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="grooveDepth" type="xs:float" minOccurs="0" />
+			<xs:element name="grooveWidth" type="xs:float" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Centration">
+		<xs:sequence>
+			<xs:element name="monocularCentrationDistance">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:float">
+							<xs:attribute name="reference" type="OCReferences"
+								use="required" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="height">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:float">
+							<xs:attribute name="reference" type="OCReferences"
+								use="required" />
+							<xs:attribute name="referenceHeight" type="HeightReferences"
+								use="required" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="backVertexDistance" type="xs:float"
+				minOccurs="0" />
+			<xs:element name="eyeRotationCenterDistance" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:float">
+							<xs:attribute name="reference" type="RCDReferences"
+								use="required" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Coating">
+		<xs:sequence>
+			<xs:element name="commercialCode" type="xs:string" />
+			<xs:element name="minIntensity" type="xs:integer" minOccurs="0" />
+			<xs:element name="maxIntensity" type="xs:integer"
+				minOccurs="0" />
+			<xs:element name="colorName" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="coatingType" type="CoatingTypes" use="required" />
+	</xs:complexType>
+	<xs:complexType name="ContactInfo">
+		<xs:sequence>
+			<xs:element name="title" type="xs:string" minOccurs="0" />
+			<xs:element name="firstName" type="xs:string" minOccurs="0" />
+			<xs:element name="lastName" type="xs:string" />
+			<xs:element name="phone" type="xs:string" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="fax" type="xs:string" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="eMail" type="xs:string" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CPoint">
+		<xs:sequence>
+			<xs:element name="x" type="xs:float" />
+			<xs:element name="y" type="xs:float" />
+			<xs:element name="z" type="xs:float" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Curve">
+		<xs:choice>
+			<xs:element name="flat" type="xs:boolean" />
+			<xs:element name="moreCurved" type="xs:boolean" />
+			<xs:element name="baseCurve" type="xs:float" />
+			<xs:element name="planoConcave" type="xs:boolean" />
+			<xs:element name="planoConvex" type="xs:boolean" />
+			<xs:element name="biConcave" type="xs:boolean" />
+			<xs:element name="biConvex" type="xs:boolean" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="Cylinder">
+		<xs:sequence>
+			<xs:element name="power" type="xs:float" />
+			<xs:element name="axis" type="xs:float" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Decentration">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="length" type="xs:float" />
+				<xs:element name="direction" type="xs:integer" />
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="horizontal" type="xs:float" />
+				<xs:element name="vertical" type="xs:float" />
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="hdec" type="xs:float" />
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="Diameter">
+		<xs:sequence>
+			<xs:element name="physical" type="xs:integer" />
+			<xs:element name="optical" type="xs:integer" minOccurs="0" />
+			<xs:choice>
+				<xs:element name="elliptic" type="xs:boolean" default="false"
+					minOccurs="0" />
+				<xs:element name="physicalVertical" type="xs:integer"
+					minOccurs="0" />
+			</xs:choice>
+			<xs:element name="encoded" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DrillHoles">
+		<xs:choice>
+			<xs:element name="pDrillHole" maxOccurs="10">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="point" type="PPoint" maxOccurs="2" />
+						<xs:element name="depth" type="xs:float" minOccurs="0" />
+						<xs:element name="diameterHole" type="xs:float"
+							minOccurs="0" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="cDrillHole" maxOccurs="10">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="point" type="CPoint" maxOccurs="2" />
+						<xs:element name="depth" type="xs:float" minOccurs="0" />
+						<xs:element name="diameterHole" type="xs:float"
+							minOccurs="0" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="Edging">
+		<xs:sequence>
+			<xs:element name="bevel" type="Bevel" />
+			<xs:element name="polish" type="xs:boolean" default="false"
+				minOccurs="0" />
+			<xs:element name="drilling" type="xs:boolean" default="false"
+				minOccurs="0" />
+			<xs:element name="chamfer" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ChamferIntensity">
+							<xs:attribute name="position" type="ChamferPos" use="optional"
+								default="BOTH" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="edgingType" type="EdgingType" use="required" />
+	</xs:complexType>
+	<xs:complexType name="Fitting">
+		<xs:sequence>
+			<xs:element name="place" type="FittingPlace" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Frame">
+		<xs:sequence>
+			<xs:element name="material" type="FrameMaterials" />
+			<xs:element name="manufacturer" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="brand" type="xs:string" minOccurs="0" />
+			<xs:element name="model" type="xs:string" minOccurs="0" />
+			<xs:element name="size" type="FrameSize" minOccurs="0" />
+			<xs:element name="color" type="xs:string" minOccurs="0" />
+			<xs:element name="commercialCode" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="shape" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:choice>
+							<xs:element name="catalog">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="shapeId" type="xs:string" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="explicit" maxOccurs="2">
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="Shape">
+											<xs:attribute name="side" type="SidesSimple"
+												use="required" />
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="tracerData" type="TracerData" />
+						</xs:choice>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="boxWidth" type="xs:float" minOccurs="0" />
+			<xs:element name="boxHeight" type="xs:float" minOccurs="0" />
+			<xs:element name="distanceBetweenLenses" type="xs:float"
+				minOccurs="0" />
+			<xs:element name="drillHoles" minOccurs="0" maxOccurs="2">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="DrillHoles">
+							<xs:attribute name="side" type="Sides" use="required" />
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="pantoscopicAngle" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:float">
+							<xs:attribute name="dimension" type="AngleDimension"
+								use="optional" default="DEG" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="frameBowAngle" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:float">
+							<xs:attribute name="dimension" type="AngleDimension"
+								use="optional" default="DEG" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="frameCurve" type="xs:float" minOccurs="0" />
+			<xs:element name="frameReferenceId" type="xs:string"
+				minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="quantity" type="xs:integer" use="required" />
+	</xs:complexType>
+	<xs:complexType name="FrameSize">
+		<xs:sequence>
+			<xs:element name="width" type="xs:float" minOccurs="0" />
+			<xs:element name="height" type="xs:float" minOccurs="0" />
+			<xs:element name="bridge" type="xs:float" minOccurs="0" />
+			<xs:element name="templeLength" type="xs:float" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeometryType">
+		<xs:sequence>
+			<xs:element name="diameter" type="Diameter" />
+			<xs:element name="decentration" type="Decentration"
+				minOccurs="0" />
+			<xs:element name="waveFrontOptimisation" type="xs:boolean"
+				default="false" minOccurs="0" />
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="thickness" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:float">
+									<xs:attribute name="reference" type="ThicknessReferences"
+										use="required" />
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="thicknessReduction" type="xs:boolean"
+						default="false" minOccurs="0" />
+				</xs:sequence>
+				<xs:element name="thicknessReductionThin" type="xs:boolean"
+					default="false" minOccurs="0" />
+			</xs:choice>
+			<xs:element name="curve" type="Curve" minOccurs="0" />
+			<xs:element name="inset" type="xs:float" minOccurs="0" />
+			<xs:element name="upset" type="xs:float" minOccurs="0" />
+			<xs:element name="designType" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="A" />
+						<xs:enumeration value="B" />
+						<xs:enumeration value="C" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:choice minOccurs="0">
+				<xs:element name="progressionLength" type="xs:float" />
+				<xs:sequence>
+					<xs:element name="progressionFarVisionShiftDistance"
+						type="xs:float" />
+					<xs:element name="progressionNearVisionShiftDistance"
+						type="xs:float" />
+					<xs:element name="progressionMiddleVisionShiftDistance"
+						type="xs:float" minOccurs="0" />
+				</xs:sequence>
+			</xs:choice>
+			<xs:element name="progressionZoneCalculationType" type="xs:string"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Header">
+		<xs:sequence>
+			<xs:element name="customersOrderId" type="xs:string" />
+			<xs:element name="distributorsOrderId" type="xs:string" />
+			<xs:element name="timeStamps" type="TimeStamps" maxOccurs="unbounded" />
+			<xs:element name="remark" type="xs:string" minOccurs="0" />
+			<xs:element name="orderParties" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="Account">
+							<xs:attribute name="role" type="Roles" use="required" />
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="software" type="Software" maxOccurs="unbounded" />
+			<xs:element name="productCatalog" type="ProductCatalog"
+				minOccurs="0" />
+			<xs:element name="portalOrderId" type="xs:string" />
+		</xs:sequence>
+		<xs:attribute name="msgType" type="MsgTypes" use="optional"
+			default="REQUEST" />
+		<xs:attribute name="msgState" type="MsgStates" use="optional"
+			default="NEW" />
+		<xs:attribute name="testIndicator" type="xs:boolean" use="optional"
+			default="false" />
+	</xs:complexType>
+	<xs:complexType name="IProfilerData">
+		<xs:sequence>
+			<xs:element name="identification">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="id">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1" />
+									<xs:maxLength value="50" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="timeStamp" type="xs:dateTime" />
+						<xs:element name="counter" minOccurs="0">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="0" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="device" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="deviceId">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:minLength value="1" />
+												<xs:maxLength value="50" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="softwareVersion">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:minLength value="1" />
+												<xs:maxLength value="50" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="result" type="IProfilerResult"
+				maxOccurs="2" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IProfilerMap">
+		<xs:sequence maxOccurs="unbounded">
+			<xs:element name="point">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="x" type="xs:float" />
+						<xs:element name="y" type="xs:float" />
+						<xs:element name="z" type="xs:float" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IProfilerResult">
+		<xs:sequence>
+			<xs:element name="autorefractorEye" type="RXDataTypeSimple" />
+			<xs:element name="wavefrontEye">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="pupilCenter" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="x" type="xs:float" />
+									<xs:element name="y" type="xs:float" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="zernikes" type="Zernikes" />
+						<xs:element name="map" type="IProfilerMap" minOccurs="0" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="wavefrontCornea" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="vertexPosition">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="x" type="xs:float" />
+									<xs:element name="y" type="xs:float" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="zernikes" type="Zernikes" />
+						<xs:element name="map" type="IProfilerMap" minOccurs="0" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="side" type="Sides" use="required" />
+	</xs:complexType>
+	<xs:complexType name="Item">
+		<xs:sequence>
+			<xs:element name="remark" type="xs:string" minOccurs="0" />
+			<xs:element name="parties" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="Account">
+							<xs:attribute name="role" type="Roles" use="required" />
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="referenceNo" type="xs:string" />
+			<xs:element name="referenceText" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="requestedDate" type="xs:date" minOccurs="0" />
+			<xs:element name="manufacturer" type="xs:string" />
+			<xs:choice>
+				<xs:element name="pair" type="Pair" />
+				<xs:element name="stockLens" type="StockLens" />
+			</xs:choice>
+			<xs:element name="options" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="insurance" type="xs:boolean" default="false"
+							minOccurs="0" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="multiplePair" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="referenceNo" type="xs:string" />
+						<xs:element name="referenceCountNo" type="xs:integer" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Lens">
+		<xs:sequence>
+			<xs:element name="commercialCode" type="xs:string" />
+			<xs:element name="stockLens" type="xs:boolean" minOccurs="0" default="false"/>
+			<xs:element name="ignoreFlags" type="xs:string" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:choice>
+				<xs:element name="rxData" type="RXDataType" />
+				<xs:element name="rxDataFn" type="RXDataTypeFarNear"
+					maxOccurs="2" />
+			</xs:choice>
+			<xs:element name="coating" type="Coating" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="centration" type="Centration" minOccurs="0" />
+			<xs:element name="geometry" type="GeometryType" />
+			<xs:element name="options" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:choice minOccurs="0">
+							<xs:element name="occlusion" type="xs:boolean" />
+							<xs:element name="frosted" type="xs:boolean" />
+						</xs:choice>
+						<xs:element name="slabOff" type="xs:boolean" default="false"
+							minOccurs="0" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="frameFit" type="xs:float" minOccurs="0" />
+			<xs:element name="engraving" type="xs:string" minOccurs="0" />
+			<xs:element name="branding" type="xs:boolean" default="false"
+				minOccurs="0" />
+			<xs:element name="experimental" type="xs:anyType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="side" type="Sides" use="required" />
+		<xs:attribute name="balancingLens" type="xs:boolean" use="optional"
+			default="false" />
+		<xs:attribute name="virtualLens" type="xs:boolean" use="optional"
+			default="false" />
+	</xs:complexType>
+	<xs:complexType name="Pair">
+		<xs:sequence>
+			<xs:element name="patient" type="Patient" minOccurs="0" />
+			<xs:element name="lens" maxOccurs="2">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="Lens">
+							<xs:attribute name="quantity" type="xs:integer" use="required" />
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="frame" type="Frame" minOccurs="0" />
+			<xs:element name="edging" type="Edging" minOccurs="0" />
+			<xs:element name="fitting" type="Fitting" minOccurs="0" />
+			<xs:element name="remark" type="xs:string" minOccurs="0" />
+			<xs:element name="thicknessMatching" type="xs:boolean"
+				default="false" minOccurs="0" />
+			<xs:element name="weightMatching" type="xs:boolean"
+				default="false" minOccurs="0" />
+			<xs:element name="prismMatching" type="xs:boolean"
+				default="false" minOccurs="0" />
+			<xs:element name="baseMatching" type="xs:boolean" default="false"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Patient">
+		<xs:complexContent>
+			<xs:extension base="Account">
+				<xs:sequence minOccurs="0">
+					<xs:element name="mailAllowed" type="xs:boolean"
+						default="false" minOccurs="0" />
+					<xs:element name="gender" type="Gender" minOccurs="0" />
+					<xs:element name="dateOfBirth" type="xs:date" minOccurs="0" />
+					<xs:sequence minOccurs="0">
+						<xs:element name="interpupillaryDistanceRight" type="xs:float" />
+						<xs:element name="interpupillaryDistanceLeft" type="xs:float" />
+					</xs:sequence>
+					<xs:element name="nearObjectDistance" type="xs:float"
+						minOccurs="0" />
+					<xs:element name="middleObjectDistance" type="xs:float"
+						minOccurs="0" />
+					<xs:element name="farObjectDistance" type="xs:float"
+						minOccurs="0" />
+					<xs:element name="nearRefractionDistance" type="xs:float"
+						minOccurs="0" />
+					<xs:element name="additionRefractionMethod" type="AdditionRefractionMethod"
+						minOccurs="0" />
+					<xs:element name="backVertexDistanceRefraction" type="xs:float"
+						minOccurs="0" />
+					<xs:element name="iProfilerData" type="IProfilerData"
+						minOccurs="0" />
+					<xs:element name="headTilt" type="xs:float" minOccurs="0" />
+					<xs:element name="ipseo" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="he" type="xs:float" />
+								<xs:element name="st" type="xs:float" />
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="headCape" type="xs:float" minOccurs="0" />
+					<xs:element name="applianceWeight" type="ApplianceWeight"
+						minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PPoint">
+		<xs:sequence>
+			<xs:element name="angle">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:float">
+							<xs:attribute name="dimension" type="AngleDimension"
+								use="optional" default="DEG" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="radius" type="xs:float" />
+			<xs:element name="z" type="xs:float" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Prism">
+		<xs:sequence>
+			<xs:element name="power" type="xs:float" />
+			<xs:element name="base" type="xs:integer" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductCatalog">
+		<xs:sequence>
+			<xs:element name="name">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="czv" />
+						<xs:enumeration value="sf4" />
+						<xs:enumeration value="sf6" />
+						<xs:enumeration value="optimeyes" />
+						<xs:enumeration value="euronet" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="release" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RXDataTypeSimple">
+		<xs:sequence>
+			<xs:element name="sphere" type="xs:float" />
+			<xs:element name="cylinder" type="Cylinder" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RXDataTypeFn">
+		<xs:sequence>
+			<xs:element name="sphere" type="xs:float" />
+			<xs:element name="cylinder" type="Cylinder" minOccurs="0" />
+			<xs:element name="prism" type="Prism" minOccurs="0"
+				maxOccurs="2" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RXDataTypeFarNear">
+		<xs:sequence>
+			<xs:element name="far" type="RXDataTypeFn" />
+			<xs:element name="near" type="RXDataTypeFn" />
+		</xs:sequence>
+		<xs:attribute name="reference" type="RxDataReferences"
+			use="required" />
+	</xs:complexType>
+	<xs:complexType name="RXDataType">
+		<xs:sequence>
+			<xs:element name="sphere" type="xs:float" />
+			<xs:element name="cylinder" type="Cylinder" minOccurs="0" />
+			<xs:element name="addition" type="xs:float" minOccurs="0" />
+			<xs:element name="prism" type="Prism" minOccurs="0"
+				maxOccurs="2" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RXDataType4SL">
+		<xs:sequence>
+			<xs:element name="sphere" type="xs:float" />
+			<xs:element name="cylinder" type="Cylinder" minOccurs="0" />
+			<xs:element name="addition" type="xs:float" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Shape">
+		<xs:sequence>
+			<xs:element name="points">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="pPoints" type="PPoint" minOccurs="18"
+							maxOccurs="unbounded" />
+						<xs:element name="cPoints" type="CPoint" minOccurs="18"
+							maxOccurs="unbounded" />
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Software">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="version" type="xs:string" />
+		</xs:sequence>
+		<xs:attribute name="typeOf" type="SoftwareTypes" use="required" />
+	</xs:complexType>
+	<xs:complexType name="StockLens">
+		<xs:sequence>
+			<xs:element name="commercialCode" type="xs:string" />
+			<xs:element name="rxData" type="RXDataType4SL" />
+			<xs:element name="coating" type="Coating" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="diameter" type="Diameter" />
+		</xs:sequence>
+		<xs:attribute name="quantity" type="xs:integer" use="required" />
+		<xs:attribute name="side" type="Sides" use="required" />
+	</xs:complexType>
+	<xs:complexType name="TimeStamps">
+		<xs:sequence>
+			<xs:element name="dateTime">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:dateTime">
+							<xs:attribute name="step" type="MsgSteps" use="required" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TracerData">
+		<xs:sequence>
+			<xs:element name="tracerType" type="TracerType" />
+			<xs:element name="tracerVersion" type="xs:string" />
+			<xs:element name="tracerID" type="xs:string" minOccurs="0" />
+			<xs:element name="binaries">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:hexBinary">
+							<xs:attribute name="format" type="TracerBinaryFormat"
+								use="required" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="adjustion" type="xs:float" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Zernikes">
+		<xs:choice>
+			<xs:element name="zernikes7" type="Zernikes7" />
+			<xs:element name="zernikes8" type="Zernikes8" />
+			<xs:element name="zernikes9" type="Zernikes9" />
+			<xs:element name="zernikes10" type="Zernikes10" />
+			<xs:element name="zernikes11" type="Zernikes11" />
+			<xs:element name="zernikes12" type="Zernikes12" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="Zernikes7">
+		<xs:sequence>
+			<xs:element name="pupilDiameter" type="xs:float" />
+			<xs:element name="z_0_0" type="xs:float" />
+			<xs:element name="z_1_M1" type="xs:float" />
+			<xs:element name="z_1_1" type="xs:float" />
+			<xs:element name="z_2_M2" type="xs:float" />
+			<xs:element name="z_2_0" type="xs:float" />
+			<xs:element name="z_2_2" type="xs:float" />
+			<xs:element name="z_3_M3" type="xs:float" />
+			<xs:element name="z_3_M1" type="xs:float" />
+			<xs:element name="z_3_1" type="xs:float" />
+			<xs:element name="z_3_3" type="xs:float" />
+			<xs:element name="z_4_M4" type="xs:float" />
+			<xs:element name="z_4_M2" type="xs:float" />
+			<xs:element name="z_4_0" type="xs:float" />
+			<xs:element name="z_4_2" type="xs:float" />
+			<xs:element name="z_4_4" type="xs:float" />
+			<xs:element name="z_5_M5" type="xs:float" />
+			<xs:element name="z_5_M3" type="xs:float" />
+			<xs:element name="z_5_M1" type="xs:float" />
+			<xs:element name="z_5_1" type="xs:float" />
+			<xs:element name="z_5_3" type="xs:float" />
+			<xs:element name="z_5_5" type="xs:float" />
+			<xs:element name="z_6_M6" type="xs:float" />
+			<xs:element name="z_6_M4" type="xs:float" />
+			<xs:element name="z_6_M2" type="xs:float" />
+			<xs:element name="z_6_0" type="xs:float" />
+			<xs:element name="z_6_2" type="xs:float" />
+			<xs:element name="z_6_4" type="xs:float" />
+			<xs:element name="z_6_6" type="xs:float" />
+			<xs:element name="z_7_M7" type="xs:float" />
+			<xs:element name="z_7_M5" type="xs:float" />
+			<xs:element name="z_7_M3" type="xs:float" />
+			<xs:element name="z_7_M1" type="xs:float" />
+			<xs:element name="z_7_1" type="xs:float" />
+			<xs:element name="z_7_3" type="xs:float" />
+			<xs:element name="z_7_5" type="xs:float" />
+			<xs:element name="z_7_7" type="xs:float" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Zernikes8">
+		<xs:complexContent>
+			<xs:extension base="Zernikes7">
+				<xs:sequence>
+					<xs:element name="z_8_M8" type="xs:float" />
+					<xs:element name="z_8_M6" type="xs:float" />
+					<xs:element name="z_8_M4" type="xs:float" />
+					<xs:element name="z_8_M2" type="xs:float" />
+					<xs:element name="z_8_0" type="xs:float" />
+					<xs:element name="z_8_2" type="xs:float" />
+					<xs:element name="z_8_4" type="xs:float" />
+					<xs:element name="z_8_6" type="xs:float" />
+					<xs:element name="z_8_8" type="xs:float" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Zernikes9">
+		<xs:complexContent>
+			<xs:extension base="Zernikes8">
+				<xs:sequence>
+					<xs:element name="z_9_M9" type="xs:float" />
+					<xs:element name="z_9_M7" type="xs:float" />
+					<xs:element name="z_9_M5" type="xs:float" />
+					<xs:element name="z_9_M3" type="xs:float" />
+					<xs:element name="z_9_M1" type="xs:float" />
+					<xs:element name="z_9_1" type="xs:float" />
+					<xs:element name="z_9_3" type="xs:float" />
+					<xs:element name="z_9_5" type="xs:float" />
+					<xs:element name="z_9_7" type="xs:float" />
+					<xs:element name="z_9_9" type="xs:float" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Zernikes10">
+		<xs:complexContent>
+			<xs:extension base="Zernikes9">
+				<xs:sequence>
+					<xs:element name="z_10_M10" type="xs:float" />
+					<xs:element name="z_10_M8" type="xs:float" />
+					<xs:element name="z_10_M6" type="xs:float" />
+					<xs:element name="z_10_M4" type="xs:float" />
+					<xs:element name="z_10_M2" type="xs:float" />
+					<xs:element name="z_10_0" type="xs:float" />
+					<xs:element name="z_10_2" type="xs:float" />
+					<xs:element name="z_10_4" type="xs:float" />
+					<xs:element name="z_10_6" type="xs:float" />
+					<xs:element name="z_10_8" type="xs:float" />
+					<xs:element name="z_10_10" type="xs:float" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Zernikes11">
+		<xs:complexContent>
+			<xs:extension base="Zernikes10">
+				<xs:sequence>
+					<xs:element name="z_11_M11" type="xs:float" />
+					<xs:element name="z_11_M9" type="xs:float" />
+					<xs:element name="z_11_M7" type="xs:float" />
+					<xs:element name="z_11_M5" type="xs:float" />
+					<xs:element name="z_11_M3" type="xs:float" />
+					<xs:element name="z_11_M1" type="xs:float" />
+					<xs:element name="z_11_1" type="xs:float" />
+					<xs:element name="z_11_3" type="xs:float" />
+					<xs:element name="z_11_5" type="xs:float" />
+					<xs:element name="z_11_7" type="xs:float" />
+					<xs:element name="z_11_9" type="xs:float" />
+					<xs:element name="z_11_11" type="xs:float" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Zernikes12">
+		<xs:complexContent>
+			<xs:extension base="Zernikes11">
+				<xs:sequence>
+					<xs:element name="z_12_M12" type="xs:float" />
+					<xs:element name="z_12_M10" type="xs:float" />
+					<xs:element name="z_12_M8" type="xs:float" />
+					<xs:element name="z_12_M6" type="xs:float" />
+					<xs:element name="z_12_M4" type="xs:float" />
+					<xs:element name="z_12_M2" type="xs:float" />
+					<xs:element name="z_12_0" type="xs:float" />
+					<xs:element name="z_12_2" type="xs:float" />
+					<xs:element name="z_12_4" type="xs:float" />
+					<xs:element name="z_12_6" type="xs:float" />
+					<xs:element name="z_12_8" type="xs:float" />
+					<xs:element name="z_12_10" type="xs:float" />
+					<xs:element name="z_12_12" type="xs:float" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings
+        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:annox="http://annox.dev.java.net"
+        version="2.1">
+
+    <jaxb:globalBindings generateElementProperty="false" fixedAttributeAsConstantProperty="true">
+        <jaxb:javaType name="java.util.Date" xmlType="xsd:dateTime"
+                       parseMethod="essilor.integrator.adapter.utils.DatatypeConverter.unmarshal"
+                       printMethod="essilor.integrator.adapter.utils.DatatypeConverter.marshal"
+                       />
+        <jaxb:javaType name="java.math.BigDecimal" xmlType="xsd:decimal"
+                       parseMethod="essilor.integrator.adapter.utils.DatatypeConverter.unmarshalDecimal"
+                       printMethod="essilor.integrator.adapter.utils.DatatypeConverter.marshalDecimal"
+        />
+        <jaxb:serializable uid ="0"/>
+        <xjc:serializable/>
+    </jaxb:globalBindings>
+
+    <jaxb:bindings schemaLocation="EETXMLSchema.xsd">
+        <jaxb:bindings node="//xs:complexType[@name='TrzbaType']">
+            <annox:annotate>
+                <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name="Trzba"/>
+            </annox:annotate>
+            <jaxb:class name="Trzba"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xs:complexType[@name='OdpovedType']">
+            <annox:annotate>
+                <annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name="Odpoved"/>
+            </annox:annotate>
+            <jaxb:class name="Odpoved"/>
+        </jaxb:bindings>
+        <jaxb:bindings node="//xs:simpleType[@name='PkpCipherType']">
+            <jaxb:typesafeEnumClass name="PkpCipherType" />
+        </jaxb:bindings>
+        <!--<jaxb:bindings node="//xs:simpleType[@name='RezimType']">-->
+            <!--<jaxb:typesafeEnumClass name="RezimType" />-->
+        <!--</jaxb:bindings>-->
+        <jaxb:bindings node="//xs:simpleType[@name='PkpDigestType']">
+            <jaxb:typesafeEnumClass name="PkpDigestType" />
+        </jaxb:bindings>
+        <jaxb:bindings node="//xs:simpleType[@name='PkpEncodingType']">
+            <jaxb:typesafeEnumClass name="PkpEncodingType" />
+        </jaxb:bindings>
+        <jaxb:bindings node="//xs:simpleType[@name='BkpDigestType']">
+            <jaxb:typesafeEnumClass name="BkpDigestType" />
+        </jaxb:bindings>
+        <jaxb:bindings node="//xs:simpleType[@name='BkpEncodingType']">
+            <jaxb:typesafeEnumClass name="BkpEncodingType" />
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+</jaxb:bindings>

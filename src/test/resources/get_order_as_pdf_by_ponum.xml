@@ -1,0 +1,7 @@
+<GetOrderAsPDFByPoNum xmlns="http://services.visionweb.com">
+	<poNum>11402338-1</poNum>
+	<username>ESDE#pmseuronet</username>
+	<password>vision</password>
+	<refid>VWEURONET</refid>
+<!-- 	<ponum>11402338-1</ponum> -->
+</GetOrderAsPDFByPoNum>

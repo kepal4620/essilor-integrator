@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="90cfe55f-8569-46c2-86f5-e196f66c7224" activeEnvironment="Default" name="EET - SOAP Project" resourceRoot="" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="ba3d4e50-36e9-4285-90b8-1adcb67c1fd4" wsaVersion="NONE" name="EETSOAP" type="wsdl" bindingName="{http://fs.mfcr.cz/eet/schema/v3}EETSOAP" soapVersion="1_1" anonymous="optional" definition="file:/D:/work/essilor/eet/EETServiceSOAPv3.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/D:/work/essilor/eet/EETServiceSOAPv3.wsdl"><con:part><con:url>file:/D:/work/essilor/eet/EETServiceSOAPv3.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="EET" targetNamespace="http://fs.mfcr.cz/eet/schema/v3" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://fs.mfcr.cz/eet/schema/v3" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:documentation>Ucel     : Sluzba pro odeslani datove zpravy evidovane trzby 
+    Verze    : 3.0
+    Vlastnik : Generalni financni reditelstvi</wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema>
+      <xsd:import namespace="http://fs.mfcr.cz/eet/schema/v3" schemaLocation="EETXMLSchemav3.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="OdeslaniTrzbyRequest">
+    <wsdl:part element="tns:Trzba" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="OdeslaniTrzbyResponse">
+    <wsdl:part element="tns:Odpoved" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="EET">
+    <wsdl:operation name="OdeslaniTrzby">
+      <wsdl:input message="tns:OdeslaniTrzbyRequest"/>
+      <wsdl:output message="tns:OdeslaniTrzbyResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EETSOAP" type="tns:EET">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="OdeslaniTrzby">
+      <soap:operation soapAction="http://fs.mfcr.cz/eet/OdeslaniTrzby"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EETService">
+    <wsdl:port binding="tns:EETSOAP" name="EETServiceSOAP">
+      <!--Na nasledujicim radku je doplnena adresa "playground"
+        1. "pg.eet.cz" domenove jmeno
+        2. "443" cislo portu
+        Tato adresa plati pouze pro neprodukcni prostredi!-->
+      <soap:address location="https://pg.eet.cz:443/eet/services/EETServiceSOAP/v3"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:\D:\work\essilor\eet\EETXMLSchemav3.xsd</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://fs.mfcr.cz/eet/schema/v3" version="3.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://fs.mfcr.cz/eet/schema/v3">
+  <xs:element name="Trzba" type="tns:TrzbaType"/>
+  <xs:complexType name="TrzbaType">
+    <xs:sequence>
+      <xs:element maxOccurs="1" minOccurs="1" name="Hlavicka" type="tns:TrzbaHlavickaType"/>
+      <xs:element maxOccurs="1" minOccurs="1" name="Data" type="tns:TrzbaDataType"/>
+      <xs:element maxOccurs="1" minOccurs="1" name="KontrolniKody" type="tns:TrzbaKontrolniKodyType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TrzbaHlavickaType">
+    <xs:attribute name="uuid_zpravy" type="tns:UUIDType" use="required"/>
+    <xs:attribute name="dat_odesl" type="tns:dateTime" use="required"/>
+    <xs:attribute name="prvni_zaslani" type="xs:boolean" use="required"/>
+    <xs:attribute name="overeni" type="xs:boolean" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="TrzbaDataType">
+    <xs:attribute name="dic_popl" type="tns:CZDICType" use="required"/>
+    <xs:attribute name="dic_poverujiciho" type="tns:CZDICType" use="optional"/>
+    <xs:attribute name="id_provoz" type="tns:IdProvozType" use="required"/>
+    <xs:attribute name="id_pokl" type="tns:string" use="required"/>
+    <xs:attribute name="porad_cis" type="tns:string" use="required"/>
+    <xs:attribute name="dat_trzby" type="tns:dateTime" use="required"/>
+    <xs:attribute name="celk_trzba" type="tns:CastkaType" use="required"/>
+    <xs:attribute name="zakl_nepodl_dph" type="tns:CastkaType" use="optional"/>
+    <xs:attribute name="zakl_dan1" type="tns:CastkaType" use="optional"/>
+    <xs:attribute name="dan1" type="tns:CastkaType" use="optional"/>
+    <xs:attribute name="zakl_dan2" type="tns:CastkaType" use="optional"/>
+    <xs:attribute name="dan2" type="tns:CastkaType" use="optional"/>
+    <xs:attribute name="zakl_dan3" type="tns:CastkaType" use="optional"/>
+    <xs:attribute name="dan3" type="tns:CastkaType" use="optional"/>
+    <xs:attribute name="cest_sluz" type="tns:CastkaType" use="optional"/>
+    <xs:attribute name="pouzit_zboz1" type="tns:CastkaType" use="optional"/>
+    <xs:attribute name="pouzit_zboz2" type="tns:CastkaType" use="optional"/>
+    <xs:attribute name="pouzit_zboz3" type="tns:CastkaType" use="optional"/>
+    <xs:attribute name="urceno_cerp_zuct" type="tns:CastkaType" use="optional"/>
+    <xs:attribute name="cerp_zuct" type="tns:CastkaType" use="optional"/>
+    <xs:attribute name="rezim" type="tns:RezimType" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="TrzbaKontrolniKodyType">
+    <xs:sequence>
+      <xs:element maxOccurs="1" minOccurs="1" name="pkp" type="tns:PkpElementType"/>
+      <xs:element maxOccurs="1" minOccurs="1" name="bkp" type="tns:BkpElementType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType mixed="true" name="PkpElementType">
+    <xs:simpleContent>
+      <xs:extension base="tns:PkpType">
+        <xs:attribute name="digest" type="tns:PkpDigestType" use="required"/>
+        <xs:attribute name="cipher" type="tns:PkpCipherType" use="required"/>
+        <xs:attribute name="encoding" type="tns:PkpEncodingType" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType mixed="true" name="BkpElementType">
+    <xs:simpleContent>
+      <xs:extension base="tns:BkpType">
+        <xs:attribute name="digest" type="tns:BkpDigestType" use="required"/>
+        <xs:attribute name="encoding" type="tns:BkpEncodingType" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:element name="Odpoved" type="tns:OdpovedType"/>
+  <xs:complexType name="OdpovedType">
+    <xs:sequence>
+      <xs:element maxOccurs="1" minOccurs="1" name="Hlavicka" type="tns:OdpovedHlavickaType"/>
+      <xs:choice maxOccurs="1" minOccurs="1">
+        <xs:element name="Potvrzeni" type="tns:OdpovedPotvrzeniType"/>
+        <xs:element name="Chyba" type="tns:OdpovedChybaType"/>
+      </xs:choice>
+      <xs:element maxOccurs="10" minOccurs="0" name="Varovani" type="tns:OdpovedVarovaniType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OdpovedHlavickaType">
+    <xs:attribute name="uuid_zpravy" type="tns:UUIDType" use="optional"/>
+    <xs:attribute name="bkp" type="tns:BkpType" use="optional"/>
+    <xs:attribute name="dat_prij" type="tns:dateTime" use="optional"/>
+    <xs:attribute name="dat_odmit" type="tns:dateTime" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="OdpovedPotvrzeniType">
+    <xs:attribute name="fik" type="tns:FikType" use="required"/>
+    <xs:attribute name="test" type="xs:boolean" use="optional"/>
+  </xs:complexType>
+  <xs:complexType mixed="true" name="OdpovedChybaType">
+    <xs:attribute name="kod" type="tns:KodChybaType" use="required"/>
+    <xs:attribute name="test" type="xs:boolean" use="optional"/>
+  </xs:complexType>
+  <xs:complexType mixed="true" name="OdpovedVarovaniType">
+    <xs:attribute name="kod_varov" type="tns:KodVarovType" use="required"/>
+  </xs:complexType>
+  <xs:simpleType name="string">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9a-zA-Z\.,:;/#\-_ ]{1,20}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dateTime">
+    <xs:restriction base="xs:dateTime">
+      <xs:pattern value="\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(Z|[+\-]\d\d:\d\d)"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CastkaType">
+    <xs:restriction base="xs:decimal">
+      <xs:minExclusive value="-100000000"/>
+      <xs:maxExclusive value="100000000"/>
+      <xs:pattern value="((0|-?[1-9]\d{0,7})\.\d\d|-0\.(0[1-9]|[1-9]\d))"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="IdProvozType">
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="999999"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RezimType">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="KodChybaType">
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="-999"/>
+      <xs:maxInclusive value="999"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="KodVarovType">
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="999"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UUIDType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}"></xs:pattern>
+      <xs:length value="36"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CZDICType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="CZ[0-9]{8,10}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PkpType">
+    <xs:restriction base="xs:base64Binary">
+      <xs:length value="256"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PkpDigestType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SHA256"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PkpCipherType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="RSA2048"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PkpEncodingType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="base64"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BkpType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{8}-[0-9a-fA-F]{8}-[0-9a-fA-F]{8}-[0-9a-fA-F]{8}"></xs:pattern>
+      <xs:length value="44"/>
+      <xs:whiteSpace value="collapse"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BkpDigestType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SHA1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BkpEncodingType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="base16"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FikType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}-[0-9a-fA-F]{2}"></xs:pattern>
+      <xs:length value="39"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://AP708180:8088/mockEETSOAP</con:endpoint><con:endpoint>https://XXXXXX:YYYY/eet/services/EETServiceSOAP/v1</con:endpoint><con:endpoint>https://pg.eet.cz:443/eet/services/EETServiceSOAP/v3</con:endpoint></con:endpoints><con:operation id="b6bd8b83-d489-46c2-8ef3-fb1444f4142e" isOneWay="false" action="http://fs.mfcr.cz/eet/OdeslaniTrzby" name="OdeslaniTrzby" bindingOperationName="OdeslaniTrzby" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="4786c3bb-84dc-4401-b2e0-8e2c928bbad9" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://AP708180:8088/mockEETSOAP</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v3="http://fs.mfcr.cz/eet/schema/v3">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <v3:Trzba>\r
+         <v3:Hlavicka uuid_zpravy="?" dat_odesl="?" prvni_zaslani="?" overeni="?"/>\r
+         <v3:Data dic_popl="?" dic_poverujiciho="?" id_provoz="?" id_pokl="?" porad_cis="?" dat_trzby="?" celk_trzba="?" zakl_nepodl_dph="?" zakl_dan1="?" dan1="?" zakl_dan2="?" dan2="?" zakl_dan3="?" dan3="?" cest_sluz="?" pouzit_zboz1="?" pouzit_zboz2="?" pouzit_zboz3="?" urceno_cerp_zuct="?" cerp_zuct="?" rezim="?"/>\r
+         <v3:KontrolniKody>\r
+            <v3:pkp digest="?" cipher="?" encoding="?">cid:719482683157</v3:pkp>\r
+            <v3:bkp digest="?" encoding="?">?</v3:bkp>\r
+         </v3:KontrolniKody>\r
+      </v3:Trzba>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://fs.mfcr.cz/eet/OdeslaniTrzby"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:mockService id="0293f538-53dc-439d-94eb-7c8b6747092a" port="8088" path="/mockEETSOAP" host="AP708180" name="EETSOAP MockService" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="OdeslaniTrzby" id="f65324ec-bc45-4ac3-90c0-00010152d246" interface="EETSOAP" operation="OdeslaniTrzby"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" id="384742bb-c9c4-4811-b94c-46d2012857d5" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v3="http://fs.mfcr.cz/eet/schema/v3">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <v3:Odpoved>
+         <v3:Hlavicka uuid_zpravy="6E452D311CD74528E04400144F7865B8" bkp="aaa" dat_prij="2016/05/26" dat_odmit="2016/06/01"/>
+         <!--You have a CHOICE of the next 2 items at this level-->
+         <v3:Potvrzeni fik="a" test="n"/>
+      </v3:Odpoved>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://fs.mfcr.cz/eet/OdeslaniTrzby"/></con:response><con:response name="Response 2" id="3cf5150d-b9ab-4c5f-966d-1b043c5c5a9b" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v3="http://fs.mfcr.cz/eet/schema/v3">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <v3:Odpoved>
+         <v3:Hlavicka uuid_zpravy="?" bkp="?" dat_prij="?" dat_odmit="?"/>
+         <!--You have a CHOICE of the next 2 items at this level-->
+         <v3:Chyba kod="010" test="011">e gero</v3:Chyba>
+      </v3:Odpoved>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://fs.mfcr.cz/eet/OdeslaniTrzby"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

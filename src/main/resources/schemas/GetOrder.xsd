@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<s:schema xmlns:s="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://services.visionweb.com" xmlns:tns="http://services.visionweb.com"
+	elementFormDefault="qualified">
+	<s:element name="GetOrder">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="orderId"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="sloid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="versionnum"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetOrderResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="GetOrderResult"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetOrderList">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="sloid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="ordertype"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="jobtype"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="startdate"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="enddate"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetOrderListResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="GetOrderListResult"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetOrderByPoNumTimestamp">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="ponum" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="versionnum"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="timestamp"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetOrderByPoNumTimestampResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1"
+					name="GetOrderByPoNumTimestampResult" type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetOrderObjectByPoNumTimestamp">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="ponum" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="versionnum"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="timestamp"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetOrderObjectByPoNumTimestampResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1"
+					name="GetOrderObjectByPoNumTimestampResult" type="tns:OrderXml" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="OrderXml">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="1" name="Xml" type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="Trace"
+				type="s:base64Binary" />
+			<s:element minOccurs="0" maxOccurs="1" name="Error" type="s:string" />
+		</s:sequence>
+	</s:complexType>
+	<s:element name="GetOrderByPoNum">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="ponum" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="versionnum"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetOrderByPoNumResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="GetOrderByPoNumResult"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetOrderObjectByPoNum">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="ponum" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="versionnum"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetOrderObjectByPoNumResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1"
+					name="GetOrderObjectByPoNumResult" type="tns:OrderXml" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetOrderCompressed">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="orderId"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="sloid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="versionnum"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetOrderCompressedResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1"
+					name="GetOrderCompressedResult" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="OrderPdf">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="1" name="OrderId" type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="PoNum" type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="Pdf"
+				type="s:base64Binary" />
+			<s:element minOccurs="0" maxOccurs="1" name="Error" type="s:string" />
+		</s:sequence>
+	</s:complexType>
+	<s:element name="GetOrderAsPDF">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="orderId"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetOrderAsPDFResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="GetOrderAsPDFResult"
+					type="tns:OrderPdf" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetOrderAsPDFByPoNum">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="poNum" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetOrderAsPDFByPoNumResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1"
+					name="GetOrderAsPDFByPoNumResult" type="tns:OrderPdf" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+</s:schema>

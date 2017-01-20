@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+							http://www.springframework.org/schema/jdbc
+							http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+
+	<bean id="dataSource" class="essilor.integrator.adapter.datasource.RoutingDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry key="ZL" value-ref="zlDataSource" />
+				<entry key="LH" value-ref="lhDataSource" />
+<!-- 				<entry key="VS" value-ref="vsDataSource" /> -->
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="zlDataSource" />
+	</bean>
+
+	<bean id="parentDataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		abstract="true">
+	</bean>
+
+	<bean id="zlDataSource"
+		class="essilor.integrator.adapter.datasource.CustomDriverManagerDataSource"
+		parent="parentDataSource">
+		<property name="url" value="${zl.jdbc.url}" />
+		<property name="username" value="${zl.jdbc.username}" />
+		<property name="password" value="${zl.jdbc.password}" />
+		<property name="driverClassName" value="${zl.jdbc.driverClassName}" />
+		<property name="encrypt" value="false"/>
+	</bean>
+
+	<bean id="lhDataSource"
+		class="essilor.integrator.adapter.datasource.CustomDriverManagerDataSource"
+		parent="parentDataSource">
+		<property name="url" value="${lh.jdbc.url}" />
+		<property name="username" value="${lh.jdbc.username}" />
+		<property name="password" value="${lh.jdbc.password}" />
+		<property name="driverClassName" value="${lh.jdbc.driverClassName}" />
+		<property name="encrypt" value="false"/>
+	</bean>
+
+<!-- 	<bean id="vsDataSource" -->
+<!-- 		class="org.springframework.jdbc.datasource.DriverManagerDataSource" -->
+<!-- 		parent="parentDataSource"> -->
+<!-- 		<property name="url" value="${vs.jdbc.url}" /> -->
+<!-- 		<property name="username" value="${vs.jdbc.username}" /> -->
+<!-- 		<property name="password" value="${vs.jdbc.password}" /> -->
+<!-- 		<property name="driverClassName" value="${vs.jdbc.driverClassName}" /> -->
+<!-- 	</bean> -->
+
+</beans>							

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util">
+
+	<context:annotation-config />
+
+	<aop:aspectj-autoproxy />
+
+	<tx:annotation-driven order="0" />
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="setDataSourceAspect"
+		class="essilor.integrator.adapter.datasource.SetDataSourceAspect" />
+
+	<bean id="serviceCallTimestampAspect"
+		class="essilor.integrator.adapter.service.ServiceCallTimestampAspect" />		
+
+	<bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory">
+		<property name="soapVersion">
+			<util:constant static-field="org.springframework.ws.soap.SoapVersion.SOAP_12" />
+		</property>
+	</bean>
+
+	<bean id="uploadFileServiceMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="contextPath" value="essilor.integrator.adapter.domain.uploadfile" />
+	</bean>
+
+	<bean id="getOrderServiceMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="contextPath" value="essilor.integrator.adapter.domain.getorder" />
+	</bean>
+
+	<bean id="owValidationServiceMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="contextPath" value="essilor.integrator.adapter.domain.owvalidation" />
+	</bean>
+
+	<bean id="supplierServiceMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="contextPath" value="essilor.integrator.adapter.domain.supplier" />
+	</bean>
+
+	<bean id="jaxbContext" class="javax.xml.bind.JAXBContext"
+		factory-method="newInstance">
+		<constructor-arg index="0" value="essilor.integrator.adapter.domain.b2boptic" />
+	</bean>
+
+	<bean id="uploadFileWSTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
+		<constructor-arg ref="messageFactory" />
+		<property name="marshaller" ref="uploadFileServiceMarshaller"></property>
+		<property name="unmarshaller" ref="uploadFileServiceMarshaller"></property>
+		<property name="messageSender">
+			<bean
+				class="org.springframework.ws.transport.http.HttpComponentsMessageSender">
+ 				<property name="httpClient" ref="httpClient" />
+			</bean>
+		</property>
+		<property name="defaultUri" value="${adapter.uri.uploadfile}" />
+	</bean>
+
+	<bean id="getOrderWSTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
+		<constructor-arg ref="messageFactory" />
+		<property name="marshaller" ref="getOrderServiceMarshaller"></property>
+		<property name="unmarshaller" ref="getOrderServiceMarshaller"></property>
+		<property name="messageSender">
+			<bean
+				class="org.springframework.ws.transport.http.HttpComponentsMessageSender">
+ 				<property name="httpClient" ref="httpClient" />
+			</bean>
+		</property>
+		<property name="defaultUri" value="${adapter.uri.getorder}" />
+	</bean>
+
+	<bean id="owValidationWSTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
+		<constructor-arg ref="messageFactory" />
+		<property name="marshaller" ref="owValidationServiceMarshaller"></property>
+		<property name="unmarshaller" ref="owValidationServiceMarshaller"></property>
+		<property name="messageSender">
+			<bean
+				class="org.springframework.ws.transport.http.HttpComponentsMessageSender">
+ 				<property name="httpClient" ref="httpClient" />
+			</bean>
+		</property>
+		<property name="defaultUri" value="${adapter.uri.owvalidation}" />
+	</bean>
+
+	<bean id="supplierWSTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
+		<constructor-arg ref="messageFactory" />
+		<property name="marshaller" ref="supplierServiceMarshaller"></property>
+		<property name="unmarshaller" ref="supplierServiceMarshaller"></property>
+		<property name="messageSender">
+			<bean
+				class="org.springframework.ws.transport.http.HttpComponentsMessageSender">
+ 				<property name="httpClient" ref="httpClient" />
+			</bean>
+		</property>
+		<property name="defaultUri" value="${adapter.uri.supplier}" />
+	</bean>
+
+	<bean id="httpClient"
+		class="essilor.integrator.adapter.tools.httpclient.MyHttpClient">
+		<constructor-arg name="proxyHost" value="" />
+		<constructor-arg name="proxyPort" value="0" />
+		<constructor-arg name="proxyUser" value="" />
+		<constructor-arg name="proxyPassword" value="" />
+	</bean>
+
+	<bean id="orderDao" class="essilor.integrator.adapter.dao.OrderDaoImpl">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
+	<bean id="confDao" class="essilor.integrator.adapter.dao.ConfDaoImpl">
+		<constructor-arg ref="dataSource" />
+		<property name="softwareOriginatorName" value="${adapter.software.originator.name}" />
+		<property name="softwareSenderName" value="${adapter.software.sender.name}" />
+		<property name="softwareOriginatorVersion" value="${adapter.software.originator.version}" />
+		<property name="softwareSenderVersion" value="${adapter.software.sender.version}" />
+	</bean>
+
+	<bean id="customerDao" class="essilor.integrator.adapter.dao.CustomerDaoImpl">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
+	<bean id="b2bOpticBuilder" class="essilor.integrator.adapter.service.B2BOpticBuilder">
+		<property name="originator" value="${adapter.originator}" />
+		<property name="shipto" value="${adapter.shipto}" />
+	</bean>
+
+	<bean id="orderBuilder" class="essilor.integrator.adapter.service.OrderBuilder" />
+
+	<bean id="adapterService" class="essilor.integrator.adapter.service.AdapterServiceImpl">
+		<property name="username" value="${adapter.username}" />
+		<property name="password" value="${adapter.password}" />
+		<property name="refid" value="${adapter.refid}" />
+		<property name="locale" value="${adapter.locale}" />
+		<property name="temp" value="${adapter.temp}" />
+	</bean>
+
+	<bean id="essilorService" class="essilor.integrator.adapter.service.EssilorServiceImpl" />
+	<bean id="logService" class="essilor.integrator.adapter.service.LogServiceImpl" />
+	<bean id="orderService" class="essilor.integrator.adapter.service.OrderServiceImpl" />
+
+	<bean id="adapter" class="essilor.integrator.adapter.Adapter">
+		<property name="port" value="${adapter.port}" />
+		<property name="service" ref="adapterService" />
+	</bean>
+
+	<import resource="spring/eet-config.xml"/>
+</beans>

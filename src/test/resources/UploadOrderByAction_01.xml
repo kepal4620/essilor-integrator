@@ -1,0 +1,91 @@
+    <tns:UploadOrderByAction xmlns:tns="http://services.visionweb.com">
+      <tns:username>ESCZ#OPTOSYSCZTEST</tns:username>
+      <tns:password>vision</tns:password>
+      <tns:refid>VWOPTOSYSCZ</tns:refid>
+      <tns:locale>cs-CZ</tns:locale>
+      <tns:sloid>8317</tns:sloid>
+      <tns:data>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;b2bOptic&gt;
+	&lt;header msgState="NEW" testIndicator="false" msgType="CALCULATION"&gt;
+		&lt;customersOrderId&gt;450111-1&lt;/customersOrderId&gt;
+		&lt;distributorsOrderId /&gt;
+		&lt;timeStamps&gt;
+			&lt;dateTime step="CREATE"&gt;2015-09-29T03:14:00&lt;/dateTime&gt;
+		&lt;/timeStamps&gt;
+		&lt;orderParties role="ORIGINATOR"&gt;
+			&lt;id&gt;0000666&lt;/id&gt;
+			&lt;address&gt;
+				&lt;addressLine&gt;Test Optika, s.r.o.&lt;/addressLine&gt;
+				&lt;addressLine&gt;Jílová 19/2A&lt;/addressLine&gt;
+				&lt;city&gt;Zlín&lt;/city&gt;
+				&lt;zip&gt;702 00&lt;/zip&gt;
+			&lt;/address&gt;
+			&lt;contact/&gt;
+		&lt;/orderParties&gt;
+
+		&lt;software typeOf="ORIGINATOR"&gt;
+			&lt;name&gt;OPTOSYSTEM&lt;/name&gt;
+			&lt;version&gt;3.1&lt;/version&gt;
+		&lt;/software&gt;
+		&lt;software typeOf="SENDER"&gt;
+			&lt;name&gt;EssilorAdapter&lt;/name&gt;
+			&lt;version&gt;2.5&lt;/version&gt;
+		&lt;/software&gt;
+		&lt;portalOrderId /&gt;
+	&lt;/header&gt;
+	
+	&lt;items&gt;
+		&lt;item&gt;
+			&lt;parties role="SHIPTO"&gt;
+				&lt;id&gt;0000666&lt;/id&gt;
+			&lt;/parties&gt;
+			&lt;referenceNo&gt;450111-1&lt;/referenceNo&gt;
+			&lt;referenceText&gt;K.&lt;/referenceText&gt;
+			&lt;manufacturer&gt;ESSILOR&lt;/manufacturer&gt;
+			
+			&lt;pair&gt;
+				&lt;patient&gt;
+					&lt;id memberShipID="1"&gt;164&lt;/id&gt;
+					&lt;name&gt;K.&lt;/name&gt;
+					&lt;contact&gt;
+						&lt;title&gt;&lt;/title&gt;
+						&lt;firstName&gt;Radomír&lt;/firstName&gt;
+						&lt;lastName&gt;K.&lt;/lastName&gt;
+					&lt;/contact&gt;
+					&lt;mailAllowed&gt;false&lt;/mailAllowed&gt;
+					&lt;interpupillaryDistanceRight&gt;0.0&lt;/interpupillaryDistanceRight&gt;
+					&lt;interpupillaryDistanceLeft&gt;0.0&lt;/interpupillaryDistanceLeft&gt;
+				&lt;/patient&gt;
+
+				&lt;lens quantity="1" side="RIGHT"&gt;
+					&lt;commercialCode&gt;981259&lt;/commercialCode&gt;
+					&lt;rxData&gt;
+						&lt;sphere&gt;+01.00&lt;/sphere&gt;
+					&lt;/rxData&gt;
+					&lt;centration&gt;
+						&lt;height reference="FAR" referenceHeight="OVERBOX"&gt;32.50&lt;/height&gt;
+					&lt;/centration&gt;
+					&lt;geometry&gt;&lt;diameter&gt;&lt;physical&gt;65&lt;/physical&gt;&lt;/diameter&gt;&lt;/geometry&gt;
+					&lt;designtype&gt;A&lt;/designtype&gt;
+				&lt;/lens&gt;
+				
+				&lt;lens quantity="1" side="LEFT"&gt;
+					&lt;commercialCode&gt;981259&lt;/commercialCode&gt;
+					&lt;rxData&gt;
+						&lt;sphere&gt;-01.00&lt;/sphere&gt;
+					&lt;/rxData&gt;
+					&lt;centration&gt;
+						&lt;height reference="FAR" referenceHeight="OVERBOX"&gt;35.00&lt;/height&gt;
+					&lt;/centration&gt;
+					&lt;geometry&gt;&lt;diameter&gt;&lt;physical&gt;70&lt;/physical&gt;&lt;/diameter&gt;&lt;/geometry&gt;
+					&lt;designtype&gt;A&lt;/designtype&gt;
+				&lt;/lens&gt;
+				
+				&lt;frame quantity="0"&gt;&lt;material&gt;METAL&lt;/material&gt;&lt;/frame&gt;
+			&lt;/pair&gt;
+		&lt;/item&gt;
+	&lt;/items&gt;
+&lt;/b2bOptic&gt;</tns:data>
+      <tns:tempId/>
+      <tns:actionType>SavePending</tns:actionType>
+    </tns:UploadOrderByAction>

@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:schema xmlns:s="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" targetNamespace="http://services.visionweb.com"
+	xmlns:tns="http://services.visionweb.com">
+	<s:element name="UploadOrderByAction">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="locale" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="sloid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="data" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="trace" type="tns:Trace" />
+				<s:element minOccurs="0" maxOccurs="1" name="tempId" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="actionType"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="Trace">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="1" name="TraceData"
+				type="s:base64Binary" />
+			<s:element minOccurs="0" maxOccurs="1" name="FileName"
+				type="s:string" />
+		</s:sequence>
+	</s:complexType>
+	<s:element name="UploadOrderByActionResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1"
+					name="UploadOrderByActionResult" type="tns:ResponseInfo" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="ResponseInfo">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="1" name="OrderId" type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+			<s:element minOccurs="1" maxOccurs="1" name="UpdateDate"
+				type="s:dateTime" />
+			<s:element minOccurs="0" maxOccurs="1" name="ErrorMessages"
+				type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="URL" type="s:string" />
+		</s:sequence>
+	</s:complexType>
+	<s:element name="UploadOrderByActionWithWarningManagement">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="locale" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="sloid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="data" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="trace" type="tns:Trace" />
+				<s:element minOccurs="0" maxOccurs="1" name="tempId" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="actionType"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="supressedWarnings"
+					type="tns:ArrayOfString" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="ArrayOfString">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="unbounded" name="string"
+				nillable="true" type="s:string" />
+		</s:sequence>
+	</s:complexType>
+	<s:element name="UploadOrderByActionWithWarningManagementResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1"
+					name="UploadOrderByActionWithWarningManagementResult" type="tns:ResponseInfo" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="UploadOrderByActionWarningsAccepted">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="locale" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="sloid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="data" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="trace" type="tns:Trace" />
+				<s:element minOccurs="0" maxOccurs="1" name="tempId" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="actionType"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="UploadOrderByActionWarningsAcceptedResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1"
+					name="UploadOrderByActionWarningsAcceptedResult" type="tns:ResponseInfo" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="SendOrder">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="locale" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="sloid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="orderFile"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="traceFile"
+					type="s:base64Binary" />
+				<s:element minOccurs="0" maxOccurs="1" name="traceFileName"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="SendOrderResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="SendOrderResult"
+					type="tns:Response" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="Response">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="1" name="OrderId" type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="PMSOrderId"
+				type="s:string" />
+			<s:element minOccurs="1" maxOccurs="1" name="Status"
+				type="tns:ResponseStatus" />
+			<s:element minOccurs="1" maxOccurs="1" name="TimeStamp"
+				type="s:dateTime" />
+			<s:element minOccurs="0" maxOccurs="1" name="OrderError"
+				type="tns:ArrayOfOrderError" />
+			<s:element minOccurs="0" maxOccurs="1" name="CalculationResults"
+				type="tns:CalculationResults" />
+		</s:sequence>
+	</s:complexType>
+	<s:simpleType name="ResponseStatus">
+		<s:restriction base="s:string">
+			<s:enumeration value="OK" />
+			<s:enumeration value="KO" />
+		</s:restriction>
+	</s:simpleType>
+	<s:complexType name="ArrayOfOrderError">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="unbounded" name="OrderError"
+				nillable="true" type="tns:OrderError" />
+		</s:sequence>
+	</s:complexType>
+	<s:complexType name="OrderError">
+		<s:sequence>
+			<s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+			<s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+			<s:element minOccurs="1" maxOccurs="1" name="Severity"
+				type="tns:EventType" />
+		</s:sequence>
+	</s:complexType>
+	<s:simpleType name="EventType">
+		<s:restriction base="s:string">
+			<s:enumeration value="Fatal" />
+			<s:enumeration value="Error" />
+			<s:enumeration value="Warning" />
+			<s:enumeration value="Info" />
+			<s:enumeration value="Internal" />
+		</s:restriction>
+	</s:simpleType>
+	<s:complexType name="CalculationResults">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="1" name="CalculationImage"
+				type="s:base64Binary" />
+			<s:element minOccurs="0" maxOccurs="1" name="Left"
+				type="tns:Calculation" />
+			<s:element minOccurs="0" maxOccurs="1" name="Right"
+				type="tns:Calculation" />
+		</s:sequence>
+	</s:complexType>
+	<s:complexType name="Calculation">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="1" name="Diameter"
+				type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="LensBase"
+				type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="CenterThickness"
+				type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="Weight" type="s:string" />
+		</s:sequence>
+	</s:complexType>
+	<s:element name="UploadFile">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="pswd" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="filestring"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="subordid"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="guid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="msgguid"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="sloid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="cbsid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="ordtype"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="filename"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="UploadFileResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="UploadFileResult"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="UploadFileUser">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="pswd" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="filestring"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="subordid"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="UploadFileUserResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="UploadFileUserResult"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="UploadCustomFile">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="locale" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="data" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="trace" type="tns:Trace" />
+				<s:element minOccurs="0" maxOccurs="1" name="tempId" type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="UploadCustomFileResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1"
+					name="UploadCustomFileResult" type="tns:CustomFileInfo" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="CustomFileInfo">
+		<s:sequence>
+			<s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="Xml" type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="Guid" type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="UniqueID"
+				type="s:string" />
+			<s:element minOccurs="0" maxOccurs="1" name="Error" type="s:string" />
+		</s:sequence>
+	</s:complexType>
+	<s:element name="UploadCustomFileAction">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1" name="username"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="password"
+					type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="refid" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="locale" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="data" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="trace" type="tns:Trace" />
+				<s:element minOccurs="0" maxOccurs="1" name="tempId" type="s:string" />
+				<s:element minOccurs="0" maxOccurs="1" name="actionType"
+					type="s:string" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="UploadCustomFileActionResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element minOccurs="0" maxOccurs="1"
+					name="UploadCustomFileActionResult" type="tns:CustomFileInfo" />
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+</s:schema>
