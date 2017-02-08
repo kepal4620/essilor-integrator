@@ -1,5 +1,9 @@
 package essilor.integrator.adapter.dao;
 
+import essilor.integrator.adapter.domain.eet.EetConfigInfo;
+
+import java.util.Map;
+
 public interface ConfDao {
 
 	String getOrganisation();
@@ -14,4 +18,5 @@ public interface ConfDao {
 	String getDic();
 	String getIdProvoz();
 	String getIdPokl();
+	Map<String, EetConfigInfo> getEetConfig();
 }

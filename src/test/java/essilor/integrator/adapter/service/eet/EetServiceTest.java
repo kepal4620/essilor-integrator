@@ -17,7 +17,6 @@ public class EetServiceTest {
     public void setUp() {
         org.apache.log4j.BasicConfigurator.configure();
         context = new ClassPathXmlApplicationContext("/system-test-config.xml");
-
     }
 
     @Test

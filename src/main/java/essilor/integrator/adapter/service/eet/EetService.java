@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import java.util.Map;
 
 @Service
 public class EetService {
@@ -37,11 +39,22 @@ public class EetService {
 
     private String idProvoz;
 
+    private Map<String, String> myMap;
+
+    @Resource
+    private void setMyMap(Map<String, String> myMap) {
+        this.myMap = myMap;
+    }
+
+
     @PostConstruct
     public void init() {
         this.idPokl = confDaoImpl.getIdPokl();
         this.idProvoz = confDaoImpl.getIdProvoz();
+        System.out.println("myMap(1) : " + myMap.get("1"));
+        System.out.println("myMap(2) : " + myMap.get("2"));
     }
+
     public Result processRequest(AdapterRequest request) {
         if (request == null) {
             throw new IllegalArgumentException("request is null");

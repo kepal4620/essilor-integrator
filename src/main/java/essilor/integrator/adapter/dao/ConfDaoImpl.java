@@ -2,14 +2,19 @@ package essilor.integrator.adapter.dao;
 
 import javax.sql.DataSource;
 
+import essilor.integrator.adapter.domain.eet.EetConfigInfo;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.Map;
 
 public class ConfDaoImpl implements ConfDao {
 
 	private JdbcTemplate jdbcTemplate;
 
 	private static final String SQL = "select val from conf_ini where var = ?";
-	
+
+	private static final String GET_EET_CONFIG_SQL = "select ico,dic,id_provozovny,id_pokl,eet_keystore_path,eet_keystore_pwd,eet_keystore_alias from c_prevadzky";
+
 	private String softwareOriginatorName;
 	
 	private String softwareSenderName;
@@ -96,5 +101,7 @@ public class ConfDaoImpl implements ConfDao {
 		this.softwareSenderVersion = softwareSenderVersion;
 	}
 
-	
+	public Map<String, EetConfigInfo> getEetConfig() {
+		return null;
+	}
 }

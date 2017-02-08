@@ -83,7 +83,7 @@
 
     <bean id="eetHttpClient"
           class="essilor.integrator.adapter.tools.httpclient.EetHttpClientFactoryBean">
-        <constructor-arg name="proxyHost" value="" />
+        <constructor-arg name="proxyHost" value="localhost" />
         <constructor-arg name="proxyPort" value="0" />
         <constructor-arg name="proxyUser" value="" />
         <constructor-arg name="proxyPassword" value="" />
