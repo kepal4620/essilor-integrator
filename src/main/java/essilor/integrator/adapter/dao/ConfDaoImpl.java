@@ -1,10 +1,11 @@
 package essilor.integrator.adapter.dao;
 
-import javax.sql.DataSource;
-
 import essilor.integrator.adapter.domain.eet.EetConfigInfo;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ConfDaoImpl implements ConfDao {
@@ -13,7 +14,7 @@ public class ConfDaoImpl implements ConfDao {
 
 	private static final String SQL = "select val from conf_ini where var = ?";
 
-	private static final String GET_EET_CONFIG_SQL = "select ico,dic,id_provozovny,id_pokl,eet_keystore_path,eet_keystore_pwd,eet_keystore_alias from c_prevadzky";
+	private static final String GET_EET_CONFIG_SQL = "select ico,dic,id_provozovny,id_pokl,eet_keystore_path,eet_keystore_pwd,eet_key_alias from c_prevadzky";
 
 	private String softwareOriginatorName;
 	
@@ -102,6 +103,19 @@ public class ConfDaoImpl implements ConfDao {
 	}
 
 	public Map<String, EetConfigInfo> getEetConfig() {
-		return null;
+		Map<String, EetConfigInfo> eetConfig = new HashMap<String, EetConfigInfo>();
+		List<Map<String, Object>> rows =  jdbcTemplate.queryForList(GET_EET_CONFIG_SQL);
+		for (Map<String, Object> row : rows) {
+			EetConfigInfo eetConfigInfo = new EetConfigInfo();
+			eetConfigInfo.setIco((String) row.get("ico"));
+			eetConfigInfo.setDic((String) row.get("dic"));
+			eetConfigInfo.setId_provoz((String) row.get("id_provozovny"));
+            eetConfigInfo.setId_pokl((String) row.get("id_pokl"));
+            eetConfigInfo.setKeystorePath((String) row.get("eet_keystore_path"));
+            eetConfigInfo.setKeystorePwd((String) row.get("eet_keystore_pwd"));
+            eetConfigInfo.setKeyAlias((String) row.get("eet_key_alias"));
+            eetConfig.put(eetConfigInfo.getId_provoz(),eetConfigInfo);
+		}
+		return eetConfig;
 	}
 }

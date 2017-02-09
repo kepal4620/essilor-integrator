@@ -1,8 +1,12 @@
 package essilor.integrator.adapter.service.eet;
 
+import essilor.integrator.adapter.EetConfiguration;
 import essilor.integrator.adapter.dao.ConfDao;
+import essilor.integrator.adapter.domain.eet.EetConfigInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public class EetConfigurationService {
@@ -12,5 +16,9 @@ public class EetConfigurationService {
 
     public String getIdPokl() {
         return confDaoImpl.getIdPokl();
+    }
+
+    public Map<String, EetConfigInfo> getEetConfiguration() {
+        return confDaoImpl.getEetConfig();
     }
 }
