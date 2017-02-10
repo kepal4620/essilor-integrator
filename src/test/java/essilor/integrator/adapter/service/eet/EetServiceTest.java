@@ -30,17 +30,13 @@ public class EetServiceTest {
                 .append("000000001.00")
                 .append("000000001.00")
                 .append("-00000001.00")
-                .append("2017-01-19 19:00:00")
+                .append("2017-02-10 22:00:00")
                 .append("0209300007")
                 .append("002")
                 .append("01")
                 .append("012345678901234567890123456789")
-                .append("  CZ01640836")
-                .append("  CZ01640836")
-                //.append(" CZ683555118")
-                //.append(" CZ683555118")
-                .append(" ");
-
+                .append("ZL")
+                .append("eet                                               ");
 
         AdapterRequest req = AdapterRequest.getEmptyRequest();
         req.setEetData(EetDataBuilder.newInstance().withRequest(sb.toString()).build());

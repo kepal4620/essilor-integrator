@@ -2,6 +2,7 @@ package essilor.integrator.adapter.domain.eet;
 
 public class EetConfigInfo {
 
+    private String kod;
     private String ico;
     private String dic;
     private String id_provoz;
@@ -9,6 +10,15 @@ public class EetConfigInfo {
     private String keystorePath;
     private String keystorePwd;
     private String keyAlias;
+    private String dic_poverujuceho;
+
+    public String getKod() {
+        return kod;
+    }
+
+    public void setKod(String kod) {
+        this.kod = kod;
+    }
 
     public String getIco() {
         return ico;
@@ -64,5 +74,13 @@ public class EetConfigInfo {
 
     public void setKeyAlias(String keyAlias) {
         this.keyAlias = keyAlias;
+    }
+
+    public String getDic_poverujuceho() {
+        return dic_poverujuceho;
+    }
+
+    public void setDic_poverujuceho(String dic_poverujuceho) {
+        this.dic_poverujuceho = dic_poverujuceho;
     }
 }

@@ -19,10 +19,8 @@ public class EetData {
     private String skupinaDokladu;
     private String skupinaZakazok;
     private String poradoveCislo;
-    private String dicPoplatnika;
-    private String dicPoverujucehoPoplatnika;
-
-
+    private String kod;
+    private String password;
 
     public boolean isFirst() {
         return first;
@@ -140,19 +138,19 @@ public class EetData {
                 .append(skupinaZakazok).toString();
     }
 
-    public String getDicPoplatnika() {
-        return dicPoplatnika;
+    public String getKod() {
+        return kod;
     }
 
-    public void setDicPoplatnika(String dicPoplatnika) {
-        this.dicPoplatnika = dicPoplatnika;
+    public void setKod(String kod) {
+        this.kod = kod;
     }
 
-    public String getDicPoverujucehoPoplatnika() {
-        return dicPoverujucehoPoplatnika;
+    public String getPassword() {
+        return password;
     }
 
-    public void setDicPoverujucehoPoplatnika(String dicPoverujucehoPoplatnika) {
-        this.dicPoverujucehoPoplatnika = dicPoverujucehoPoplatnika;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

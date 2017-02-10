@@ -15,7 +15,6 @@ import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
 import org.springframework.ws.soap.security.wss4j.Wss4jSecurityInterceptor;
 import org.springframework.ws.soap.security.wss4j.support.CryptoFactoryBean;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,16 +40,12 @@ public class EetConfiguration {
     private String eetUri;
 
     @Bean
-    Map<String, String>  myMap() {
-        System.out.println("id pokl: " + configurationService.getIdPokl());
-        Map<String, String> myMap = new HashMap<String, String>();
-        myMap.put("1", "1");
-        myMap.put("2", "2");
-        return myMap;
+    Map<String, EetConfigInfo> eetConfigMap() {
+        return configurationService.getEetConfiguration();
     }
 
     @Bean
-    Map<String, WebServiceTemplate> wsMap() throws Exception {
+    Map<String, WebServiceTemplate> wsTemplateMap() throws Exception {
         Map<String, EetConfigInfo> eetConfig = configurationService.getEetConfiguration();
         Map<String, WebServiceTemplate> wsMap = new HashMap<>();
         for (EetConfigInfo eetConfigInfo : eetConfig.values()) {
@@ -61,7 +56,7 @@ public class EetConfiguration {
             wsTemplate.setInterceptors(new ClientInterceptor[] {
                     getWsSecurityInterceptor(eetConfigInfo)
             });
-            wsMap.put(eetConfigInfo.getId_provoz(), wsTemplate);
+            wsMap.put(eetConfigInfo.getKod(), wsTemplate);
         }
         return wsMap;
     }
@@ -81,5 +76,7 @@ public class EetConfiguration {
         interceptor.setSecurementSignatureCrypto((Crypto) crypto.getObject());
         return interceptor;
     }
+
+    
 }
 

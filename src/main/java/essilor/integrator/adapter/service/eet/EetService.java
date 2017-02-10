@@ -6,6 +6,7 @@ import cz.mfcr.fs.eet.schema.v3.Trzba;
 import essilor.integrator.adapter.AdapterRequest;
 import essilor.integrator.adapter.Result;
 import essilor.integrator.adapter.dao.ConfDao;
+import essilor.integrator.adapter.domain.eet.EetConfigInfo;
 import essilor.integrator.adapter.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,32 +28,16 @@ public class EetService {
     private OrderService orderService;
 
     @Autowired
-    private ConfDao confDaoImpl;
-
-    @Autowired
     private EetTrzbaBuilder eetTrzbaBuilder;
 
     @Autowired
     private EetResultBuilder eetResultBuilder;
 
-    private String idPokl;
-
-    private String idProvoz;
-
-    private Map<String, String> myMap;
+    private Map<String, EetConfigInfo> eetConfigMap;
 
     @Resource
-    private void setMyMap(Map<String, String> myMap) {
-        this.myMap = myMap;
-    }
-
-
-    @PostConstruct
-    public void init() {
-        this.idPokl = confDaoImpl.getIdPokl();
-        this.idProvoz = confDaoImpl.getIdProvoz();
-        System.out.println("myMap(1) : " + myMap.get("1"));
-        System.out.println("myMap(2) : " + myMap.get("2"));
+    private void setEetConfigMap(Map<String, EetConfigInfo> eetConfigMap) {
+        this.eetConfigMap = eetConfigMap;
     }
 
     public Result processRequest(AdapterRequest request) {
@@ -63,14 +48,19 @@ public class EetService {
             throw new IllegalStateException("eetData is null");
         }
 
+        EetConfigInfo eetConfigInfo = eetConfigMap.get(request.getEetData().getKod());
+        if (eetConfigInfo == null) {
+            throw new IllegalStateException("eetConfigInfo null for kod: " + request.getEetData().getKod());
+        }
+
         Trzba trzba = eetTrzbaBuilder.new Builder()
                 .withDateOdesl(System.currentTimeMillis())
                 .withPrvniZaslani(request.getEetData().isFirst())
                 .withOvereni(request.getEetData().getMode())
-                .withDicPopl(request.getEetData().getDicPoplatnika())
-                .withDicPover(request.getEetData().getDicPoverujucehoPoplatnika())
-                .withIdProvoz(Integer.parseInt(this.idProvoz))
-                .withIdPokl(this.idPokl)
+                .withDicPopl(eetConfigInfo.getDic())
+                .withDicPover(eetConfigInfo.getDic_poverujuceho())
+                .withIdProvoz(Integer.parseInt(eetConfigInfo.getId_provoz()))
+                .withIdPokl(eetConfigInfo.getId_pokl())
                 .withPoradCis(request.getEetData().getPoradoveCislo())
                 .withDatTrzby(request.getEetData().getDatTrzby())
                 .withCelkTrzba(request.getEetData().getCelkTrzba())
@@ -81,7 +71,7 @@ public class EetService {
                 .withRezim(1)
                 .build();
 
-        Odpoved odpoved = eetConnector.sendTrzba(trzba);
+        Odpoved odpoved = eetConnector.sendTrzba(trzba, request.getEetData().getKod());
 
         EetResult result = (EetResult) eetResultBuilder.new Builder()
                 .withAdapterRequest(request)

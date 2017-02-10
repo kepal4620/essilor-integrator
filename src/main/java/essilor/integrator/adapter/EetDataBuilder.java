@@ -47,8 +47,9 @@ public class EetDataBuilder {
         eetData.setSkupinaDokladu(request.substring(94,97).trim());
         eetData.setSkupinaZakazok(request.substring(97,99).trim());
         eetData.setDataSourceName(request.substring(99,129).trim());
-        eetData.setDicPoplatnika(request.substring(129,141).trim());
-        eetData.setDicPoverujucehoPoplatnika(request.substring(141,153).trim());
+        eetData.setKod(request.substring(129,131).trim());
+        eetData.setPassword(request.substring(131,181).trim());
+
         return eetData;
     }
 }
