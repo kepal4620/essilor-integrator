@@ -2,7 +2,6 @@ package essilor.integrator.adapter;
 
 import essilor.integrator.adapter.domain.eet.EetConfigInfo;
 import essilor.integrator.adapter.service.eet.EetConfigurationService;
-import org.apache.ws.security.components.crypto.Crypto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -69,14 +68,13 @@ public class EetConfiguration {
         interceptor.setSecurementPassword(eetConfigInfo.getKeystorePwd());
         interceptor.setSecurementSignatureAlgorithm("http://www.w3.org/2001/04/xmldsig-more#rsa-sha256");
         interceptor.setSecurementSignatureDigestAlgorithm("http://www.w3.org/2001/04/xmlenc#sha256");
-        CryptoFactoryBean crypto = new CryptoFactoryBean();
-        crypto.setKeyStorePassword(eetConfigInfo.getKeystorePwd());
-        crypto.setKeyStoreType(keystoreType);
-        crypto.setKeyStoreLocation(applicationContext.getResource(eetConfigInfo.getKeystorePath()));
-        interceptor.setSecurementSignatureCrypto((Crypto) crypto.getObject());
+        CryptoFactoryBean cryptoFactoryBean = new CryptoFactoryBean();
+        cryptoFactoryBean.setKeyStoreLocation(applicationContext.getResource(eetConfigInfo.getKeystorePath()));
+        cryptoFactoryBean.setKeyStorePassword(eetConfigInfo.getKeystorePwd());
+        cryptoFactoryBean.setKeyStoreType(keystoreType);
+        cryptoFactoryBean.afterPropertiesSet();
+        interceptor.setSecurementSignatureCrypto(cryptoFactoryBean.getObject());
         return interceptor;
     }
-
-    
 }
 

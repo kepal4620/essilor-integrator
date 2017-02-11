@@ -39,58 +39,6 @@
         </property>
     </bean>
 
-    <bean id="eetWSTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
-        <constructor-arg ref="messageFactory" />
-        <property name="marshaller" ref="eetServiceMarshaller"></property>
-        <property name="unmarshaller" ref="eetServiceMarshaller"></property>
-        <property name="messageSender">
-            <!--<bean class="org.springframework.ws.transport.http.CommonsHttpMessageSender">-->
-            <bean class="org.springframework.ws.transport.http.HttpComponentsMessageSender">
-                <property name="httpClient" ref="eetHttpClient" />
-            </bean>
-        </property>
-        <property name="interceptors">
-            <list>
-                <ref bean="wsSecurityInterceptor"/>
-            </list>
-        </property>
-        <property name="defaultUri" value="${adapter.uri.eet}" />
-    </bean>
-
-    <bean id="wsSecurityInterceptor" class="org.springframework.ws.soap.security.wss4j.Wss4jSecurityInterceptor">
-        <property name="securementActions" value="Signature"/>
-        <property name="securementSignatureKeyIdentifier" value="DirectReference"/>
-        <property name="securementUsername" value="${adapter.eet.keyAlias}" />
-        <property name="securementPassword" value="${adapter.eet.keystorePassword}" />
-        <property name="securementSignatureAlgorithm" value="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
-        <property name="securementSignatureDigestAlgorithm" value="http://www.w3.org/2001/04/xmlenc#sha256"/>
-        <property name="securementSignatureCrypto">
-            <bean class="org.springframework.ws.soap.security.wss4j.support.CryptoFactoryBean">
-                <property name="keyStorePassword" value="${adapter.eet.keystorePassword}"/>
-                <property name="keyStoreLocation" value="${adapter.eet.keystoreLocation}"/>
-                <property name="keyStoreType" value="${adapter.eet.keystoreType}"/>
-            </bean>
-        </property>
-        <!--validation -->
-        <!--<property name="validationActions" value="Signature"/>-->
-        <!--<property name="validationSignatureCrypto">-->
-            <!--<bean class="org.springframework.ws.soap.security.wss4j.support.CryptoFactoryBean">-->
-                <!--<property name="keyStorePassword" value="123456"/>-->
-                <!--<property name="keyStoreLocation" value="classpath:/keystore.jks"/>-->
-            <!--</bean>-->
-        <!--</property>-->
-    </bean>
-
-    <bean id="eetHttpClient"
-          class="essilor.integrator.adapter.tools.httpclient.EetHttpClientFactoryBean">
-        <constructor-arg name="proxyHost" value="localhost" />
-        <constructor-arg name="proxyPort" value="0" />
-        <constructor-arg name="proxyUser" value="" />
-        <constructor-arg name="proxyPassword" value="" />
-        <constructor-arg name="proxyEnable" value="false" />
-    </bean>
-
-
     <context:component-scan base-package="essilor.integrator.adapter.service.eet"/>
     <context:component-scan base-package="essilor.integrator.adapter.dao.eet"/>
 

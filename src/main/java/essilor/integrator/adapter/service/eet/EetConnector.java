@@ -37,7 +37,6 @@ public class EetConnector {
         if (wsTemplate == null) {
             throw new IllegalStateException("wsTemplate is null for kod: " + kod);
         }
-
         JAXBElement<Odpoved> root =  (JAXBElement<Odpoved>) wsTemplate.marshalSendAndReceive(trzba,
                 new SoapActionCallback("http://fs.mfcr.cz/eet/OdeslaniTrzby"));
         return root.getValue();
