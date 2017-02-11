@@ -210,16 +210,15 @@ public class TestClient {
 				.append("000003333.33")
 				.append("000004444.44")
 				.append("-00005555.55")
-				.append("2017-01-19 19:40:00")
+				.append("2017-02-11 21:30:00")
 				.append("0209300007")
 				.append("002")
 				.append("01")
 				.append("012345678901234567890123456789")
-				.append("  CZ00000019")
-				.append("  CZ00000019")
-				.append("  ");
+				.append("ZL")
+				.append("eet                                               ");
 
-		os.write(sb.toString().getBytes("UTF-8"), 0, 155);
+		os.write(sb.toString().getBytes("UTF-8"), 0, 181);
 		os.flush();
 		byte[] frame = new byte[1024];
 		is.read(frame, 0, 1024);
