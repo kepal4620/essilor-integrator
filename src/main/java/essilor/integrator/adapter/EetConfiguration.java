@@ -2,6 +2,7 @@ package essilor.integrator.adapter;
 
 import essilor.integrator.adapter.domain.eet.EetConfigInfo;
 import essilor.integrator.adapter.service.eet.EetConfigurationService;
+import essilor.integrator.adapter.tools.Encryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -61,20 +62,27 @@ public class EetConfiguration {
     }
 
     private Wss4jSecurityInterceptor getWsSecurityInterceptor(EetConfigInfo eetConfigInfo) throws Exception {
+        String  password = decryptPassword(eetConfigInfo.getKeystorePwd());
         Wss4jSecurityInterceptor interceptor = new Wss4jSecurityInterceptor();
         interceptor.setSecurementActions("Signature");
         interceptor.setSecurementSignatureKeyIdentifier("DirectReference");
         interceptor.setSecurementUsername(eetConfigInfo.getKeyAlias());
-        interceptor.setSecurementPassword(eetConfigInfo.getKeystorePwd());
+        interceptor.setSecurementPassword(password);
         interceptor.setSecurementSignatureAlgorithm("http://www.w3.org/2001/04/xmldsig-more#rsa-sha256");
         interceptor.setSecurementSignatureDigestAlgorithm("http://www.w3.org/2001/04/xmlenc#sha256");
         CryptoFactoryBean cryptoFactoryBean = new CryptoFactoryBean();
         cryptoFactoryBean.setKeyStoreLocation(applicationContext.getResource(eetConfigInfo.getKeystorePath()));
-        cryptoFactoryBean.setKeyStorePassword(eetConfigInfo.getKeystorePwd());
+        cryptoFactoryBean.setKeyStorePassword(password);
         cryptoFactoryBean.setKeyStoreType(keystoreType);
         cryptoFactoryBean.afterPropertiesSet();
         interceptor.setSecurementSignatureCrypto(cryptoFactoryBean.getObject());
         return interceptor;
+    }
+
+    private String decryptPassword(String pwd) throws Exception {
+        Encryptor e = new Encryptor();
+        String dp = e.decrypt(pwd);
+        return dp;
     }
 }
 

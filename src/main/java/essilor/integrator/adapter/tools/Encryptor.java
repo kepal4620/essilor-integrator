@@ -1,19 +1,36 @@
 package essilor.integrator.adapter.tools;
 
-import org.apache.log4j.Logger;
-//import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.Security;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.io.*;
-import java.security.*;
+
+import org.apache.log4j.Logger;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 
 public class Encryptor {
 	
-  static Logger logger = Logger.getLogger(Encryptor.class);	
+  static Logger logger = Logger.getLogger(Encryptor.class.getName());	
   static{
 	logger.setAdditivity(false);
   }
@@ -27,15 +44,15 @@ public class Encryptor {
 
   public static void createNewKey() {
     try {
-      //Security.addProvider(new Prov);
+      Security.addProvider(new BouncyCastleProvider());
       KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA", "BC");
       KeyPair keyPair = keyPairGenerator.generateKeyPair();
       PrivateKey privateKey = keyPair.getPrivate();
       PublicKey publicKey = keyPair.getPublic();
 
-      ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("private.key"));
+      ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src/main/resources/keys/private.key"));
       oos.writeObject(privateKey);
-      oos = new ObjectOutputStream(new FileOutputStream("public.key"));
+      oos = new ObjectOutputStream(new FileOutputStream("src/main/resources/keys/public.key"));
       oos.writeObject(publicKey);
     }
     catch (NoSuchProviderException e) {
@@ -69,15 +86,12 @@ public class Encryptor {
       return null;
   }
 
-  private Encryptor() {
+  public Encryptor() {
     try {
-      //Security.addProvider(new BouncyCastleProvider());
+      Security.addProvider(new BouncyCastleProvider());
       
-      ClassLoader classLoader = getClass().getClassLoader();
-//  	  File privateKeyFile = new File(classLoader.getResourceAsStream("private.key").getFile());
-//  	  File publicKeyFile = new File(classLoader.getResource("public.key").getFile());
-      InputStream priv = classLoader.getResourceAsStream("private.key");
-      InputStream publ = classLoader.getResourceAsStream("public.key");
+      FileInputStream priv = new FileInputStream("src/main/resources/keys/private.key");
+      FileInputStream publ = new FileInputStream("src/main/resources/keys/public.key");
       ObjectInputStream ois = new ObjectInputStream(priv);
       privateKey = (Key) ois.readObject();
       ois = new ObjectInputStream(publ);
@@ -140,7 +154,6 @@ public class Encryptor {
     return cipher.doFinal(in);
   }
 
-  /*
   public static void main(String args[]) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, Exception, IOException {
     if ((args.length > 0) && args[0].equals("create"))
       createNewKey();
@@ -166,8 +179,7 @@ public class Encryptor {
       }
     }
   }
-*/
-  
+
   public final String encode64(byte[] d) {
     if (d == null)
       return null;
@@ -241,12 +253,4 @@ public class Encryptor {
     }
     return dest;
   }
-  
-  public static void main(String[] args) throws Exception {
-	  Encryptor e = Encryptor.getInstance();
-	  String encrypted = e.encrypt("root");
-	  System.out.println("pwd - encrypted: " + encrypted);
-	  System.out.println("pwd - decrypted: " + e.decrypt(encrypted));
-  }
-  
 }

@@ -120,11 +120,12 @@
             <artifactId>spring-ws-security</artifactId>
             <version>${spring.ws.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.bouncycastle</groupId>-->
-            <!--<artifactId>bcprov-jdk15on</artifactId>-->
-            <!--<version>1.55</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>bouncycastle</groupId>
+            <artifactId>bouncycastle-jce-jdk13</artifactId>
+            <version>112</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
