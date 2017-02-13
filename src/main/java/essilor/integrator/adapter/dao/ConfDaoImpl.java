@@ -1,6 +1,8 @@
 package essilor.integrator.adapter.dao;
 
 import essilor.integrator.adapter.domain.eet.EetConfigInfo;
+import essilor.integrator.adapter.tools.Encryptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
@@ -9,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ConfDaoImpl implements ConfDao {
+
+	@Autowired
+	private Encryptor encryptor;
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -112,9 +117,14 @@ public class ConfDaoImpl implements ConfDao {
 			eetConfigInfo.setId_provoz((String) row.get("id_provozovny"));
             eetConfigInfo.setId_pokl((String) row.get("id_pokl"));
             eetConfigInfo.setKeystorePath((String) row.get("eet_keystore_path"));
-            eetConfigInfo.setKeystorePwd((String) row.get("eet_keystore_pwd"));
-            eetConfigInfo.setKeyAlias((String) row.get("eet_key_alias"));
-            eetConfigInfo.setDic_poverujuceho((String) row.get("dic_poverujiciho"));
+			eetConfigInfo.setKeyAlias((String) row.get("eet_key_alias"));
+			eetConfigInfo.setDic_poverujuceho((String) row.get("dic_poverujiciho"));
+			try {
+				String password = encryptor.decrypt((String) row.get("eet_keystore_pwd"));
+				eetConfigInfo.setKeystorePwd(password);
+			} catch(Exception e) {
+            	throw new RuntimeException(e);
+			}
             eetConfig.put(eetConfigInfo.getKod(),eetConfigInfo);
 		}
 		return eetConfig;

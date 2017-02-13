@@ -1,51 +1,75 @@
 package essilor.integrator.adapter.service.eet;
 
+import essilor.integrator.adapter.domain.eet.EetConfigInfo;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.security.*;
-import java.security.cert.Certificate;
+import javax.annotation.Resource;
+import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.security.Signature;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class EetSignService {
 
     private static final String SIGN_ALGORITHM = "SHA256withRSA";
 
+    private Map<String, EetConfigInfo> eetConfigMap;
+    private Map<String, KeyStore> keyStoreMap;
+
     @Value("${adapter.eet.keystoreType}")
     private String keystoreType;
 
-    @Value("${adapter.eet.keystorePath}")
-    private String keystorePath;
+    @Autowired
+    private ApplicationContext applicationContext;
 
-    @Value("${adapter.eet.keystorePassword}")
-    private String keystorePassword;
+    @Resource
+    private void setEetConfigMap(Map<String, EetConfigInfo> eetConfigMap) {
+        this.eetConfigMap = eetConfigMap;
+    }
 
-    @Value("${adapter.eet.keyAlias}")
-    private String keyAlias;
-
-    private KeyStore keystore;
 
     @PostConstruct
     public void postConstruct() {
         try {
-            keystore = KeyStore.getInstance(keystoreType);
-            keystore.load(FileUtils.openInputStream(new File(keystorePath)), keystorePassword.toCharArray());
+            keyStoreMap = new HashMap<>();
+            for (EetConfigInfo eetConfigInfo : eetConfigMap.values()) {
+                KeyStore keystore = KeyStore.getInstance(keystoreType);
+                keystore.load(applicationContext.getResource(eetConfigInfo.getKeystorePath()).getInputStream(),
+                        eetConfigInfo.getKeystorePwd().toCharArray());
+                keyStoreMap.put(eetConfigInfo.getKod(), keystore);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public byte[] getPkp(String textToSign) {
+    public byte[] getPkp(String textToSign, String kod) {
         if (textToSign == null) {
             throw new IllegalArgumentException("textToSign is null");
         }
+        if (kod == null) {
+            throw new IllegalArgumentException("kod is null");
+        }
+
+        KeyStore keystore = keyStoreMap.get(kod);
+        if (keystore == null) {
+            throw new IllegalStateException("keystore is null");
+        }
+        EetConfigInfo eetConfigInfo = eetConfigMap.get(kod);
+        if (eetConfigInfo == null) {
+            throw new IllegalStateException("eetConfigInfo is null");
+        }
         try {
             Signature signature = Signature.getInstance(SIGN_ALGORITHM);
-            signature.initSign((PrivateKey)keystore.getKey(keyAlias, keystorePassword.trim().toCharArray()));
+            signature.initSign((PrivateKey)keystore.getKey(eetConfigInfo.getKeyAlias(),
+                    eetConfigInfo.getKeystorePwd().trim().toCharArray()));
             signature.update(textToSign.getBytes("UTF-8"));
             return signature.sign();
         } catch (Exception e) {

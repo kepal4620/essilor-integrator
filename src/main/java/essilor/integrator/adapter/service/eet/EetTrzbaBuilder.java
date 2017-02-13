@@ -63,6 +63,7 @@ public class EetTrzbaBuilder {
         private BigDecimal dan2;
         private BigDecimal zaklDan2;
         private int rezim;
+        private String kod;
 
 
         public Builder() {
@@ -153,6 +154,11 @@ public class EetTrzbaBuilder {
             return this;
         }
 
+        public Builder withKod(String kod) {
+            this.kod = kod;
+            return this;
+        }
+
         public Trzba build() {
             TrzbaHlavickaType trzbaHlavicka = new TrzbaHlavickaType();
             trzbaHlavicka.setUuidZpravy(UUID.randomUUID().toString());
@@ -185,7 +191,7 @@ public class EetTrzbaBuilder {
 
         private TrzbaKontrolniKodyType buildTrzbaKontrolniKody() {
             TrzbaKontrolniKodyType trzbaKontrolniKody = new TrzbaKontrolniKodyType();
-            byte[] rsa_text = eetSignService.getPkp(getTextToSign());
+            byte[] rsa_text = eetSignService.getPkp(getTextToSign(), kod);
 
             PkpElementType pkpElementType = new PkpElementType();
             pkpElementType.setValue(rsa_text);

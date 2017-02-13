@@ -1,11 +1,15 @@
 package essilor.integrator.adapter.datasource;
 
 import essilor.integrator.adapter.tools.Encryptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import java.util.logging.Logger;
 
 public class CustomDriverManagerDataSource  extends DriverManagerDataSource {
+
+	@Autowired
+	private Encryptor encryptor;
 
 	private String  encrypt;
 
@@ -17,14 +21,11 @@ public class CustomDriverManagerDataSource  extends DriverManagerDataSource {
 		return this.encrypt;
 	}
 
-
-
 	@Override
 	public void setPassword(String password) {
 		try {
 			if ("true".equalsIgnoreCase(password)) {
-				Encryptor e = Encryptor.getInstance();
-				super.setPassword(e.decrypt(password));
+				super.setPassword(encryptor.decrypt(password));
 			} else {
 				super.setPassword(password);
 			}

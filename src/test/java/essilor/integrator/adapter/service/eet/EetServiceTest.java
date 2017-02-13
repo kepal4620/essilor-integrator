@@ -35,8 +35,7 @@ public class EetServiceTest {
                 .append("002")
                 .append("01")
                 .append("012345678901234567890123456789")
-                .append("ZL")
-                .append("eet                                               ");
+                .append("ZL");
 
         AdapterRequest req = AdapterRequest.getEmptyRequest();
         req.setEetData(EetDataBuilder.newInstance().withRequest(sb.toString()).build());

@@ -48,8 +48,6 @@ public class EetDataBuilder {
         eetData.setSkupinaZakazok(request.substring(97,99).trim());
         eetData.setDataSourceName(request.substring(99,129).trim());
         eetData.setKod(request.substring(129,131).trim());
-        eetData.setPassword(request.substring(131,181).trim());
-
         return eetData;
     }
 }

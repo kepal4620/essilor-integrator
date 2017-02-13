@@ -69,6 +69,7 @@ public class EetService {
                 .withZaklDan2(request.getEetData().getZaklDan2())
                 .withDan2(request.getEetData().getDan2())
                 .withRezim(1)
+                .withKod(request.getEetData().getKod())
                 .build();
 
         Odpoved odpoved = eetConnector.sendTrzba(trzba, request.getEetData().getKod());

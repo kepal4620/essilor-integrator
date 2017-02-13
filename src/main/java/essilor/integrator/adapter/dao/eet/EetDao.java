@@ -53,7 +53,7 @@ public class EetDao {
             "                                                          db_datasource)" +
             "                                    values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    private static final String UPDATE_FIK = "update se_pdvf set write_time=?,fik=?,pkp=?,bkp=? where ci_pdvf=? and skupina_sz=? and typ='PD' and skup_vfpd=?";
+    private static final String UPDATE_FIK = "update se_pdvf set fik=?,pkp=?,bkp=? where ci_pdvf=? and skupina_sz=? and typ='PD' and skup_vfpd=?";
 
     @Autowired
     public EetDao(@Qualifier("dataSource")DataSource dataSource) {
@@ -105,13 +105,12 @@ public class EetDao {
                     @Override
                     public void setValues(PreparedStatement ps)
                             throws SQLException {
-                        ps.setTimestamp(1, new Timestamp(ServiceCallTimestampHolder.getAsLong())); // WRITE_TIME
-                        ps.setString(2, eetResult.getFik()); // FIK
-                        ps.setString(3, eetResult.getPkp()); // PKP
-                        ps.setString(4, eetResult.getBkp()); // BKP
-                        ps.setLong(5, Long.parseLong(eetData.getPoradoveCisloDokladu())); // CI_PDVF
-                        ps.setInt(6, Integer.parseInt(eetData.getSkupinaZakazok())); // SKUPINA_SZ
-                        ps.setString(7, eetData.getSkupinaDokladu()); // SKUP_VFPD
+                        ps.setString(1, eetResult.getFik()); // FIK
+                        ps.setString(2, eetResult.getPkp()); // PKP
+                        ps.setString(3, eetResult.getBkp()); // BKP
+                        ps.setLong(4, Long.parseLong(eetData.getPoradoveCisloDokladu())); // CI_PDVF
+                        ps.setInt(5, Integer.parseInt(eetData.getSkupinaZakazok())); // SKUPINA_SZ
+                        ps.setString(6, eetData.getSkupinaDokladu()); // SKUP_VFPD
                     }
                 });
     }

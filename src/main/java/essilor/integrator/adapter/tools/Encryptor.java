@@ -1,79 +1,41 @@
 package essilor.integrator.adapter.tools;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.Security;
+import org.apache.log4j.Logger;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import java.io.*;
+import java.security.*;
 
-import org.apache.log4j.Logger;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-
-
+@Component
 public class Encryptor {
 	
   static Logger logger = Logger.getLogger(Encryptor.class.getName());	
   static{
 	logger.setAdditivity(false);
   }
-  
+
+  @Value("${adapter.eet.privateKeyPath}")
+  private String privateKeyPath;
+
+  @Value("${adapter.eet.publicKeyPath}")
+  private String publicKeyPath;
+
+  @Autowired
+  private ApplicationContext applicationContext;
+
   private Key privateKey;
   private PublicKey publicKey;
   //private Certificate cert;
   private Cipher cipher;
-
-  private static Encryptor singleton;
-
-  public static void createNewKey() {
-    try {
-      Security.addProvider(new BouncyCastleProvider());
-      KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA", "BC");
-      KeyPair keyPair = keyPairGenerator.generateKeyPair();
-      PrivateKey privateKey = keyPair.getPrivate();
-      PublicKey publicKey = keyPair.getPublic();
-
-      ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src/main/resources/keys/private.key"));
-      oos.writeObject(privateKey);
-      oos = new ObjectOutputStream(new FileOutputStream("src/main/resources/keys/public.key"));
-      oos.writeObject(publicKey);
-    }
-    catch (NoSuchProviderException e) {
-      e.printStackTrace();
-    }
-    catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    }
-    catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
-  public static Encryptor getInstance() {
-    if (singleton == null)
-      singleton = new Encryptor();
-    return singleton;
-  }
 
   public PublicKey getPublicKey() {
     return publicKey;
@@ -86,37 +48,22 @@ public class Encryptor {
       return null;
   }
 
-  public Encryptor() {
+  public Encryptor() {}
+
+  @PostConstruct
+  public void init() {
     try {
       Security.addProvider(new BouncyCastleProvider());
       
-      FileInputStream priv = new FileInputStream("src/main/resources/keys/private.key");
-      FileInputStream publ = new FileInputStream("src/main/resources/keys/public.key");
+      InputStream priv = applicationContext.getResource(privateKeyPath).getInputStream();
+      InputStream publ = applicationContext.getResource(publicKeyPath).getInputStream();
       ObjectInputStream ois = new ObjectInputStream(priv);
       privateKey = (Key) ois.readObject();
       ois = new ObjectInputStream(publ);
       publicKey = (PublicKey) ois.readObject();
-
       cipher = Cipher.getInstance("RSA", "BC");
-    }
-
-    catch (NoSuchProviderException e) {
-      e.printStackTrace();
-    }
-    catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    }
-    catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    }
-    catch (NoSuchPaddingException e) {
-      e.printStackTrace();
-    }
-    catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-    catch (IOException e) {
-      e.printStackTrace();
+    } catch (Exception e) {
+        throw new RuntimeException(e);
     }
   }
 
@@ -139,7 +86,8 @@ public class Encryptor {
     }
     catch (Exception e) { // too many to list
       if (in.length()<25)
-      	logger.warn("Warning: Password may not be encrypted!");      	
+      	logger.warn("Warning: Password may not be encrypted!");
+      throw new RuntimeException(e);
     }
     return result;
   }
@@ -152,32 +100,6 @@ public class Encryptor {
   private byte[] decrypt(byte[] in) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException {
     cipher.init(Cipher.DECRYPT_MODE, privateKey);
     return cipher.doFinal(in);
-  }
-
-  public static void main(String args[]) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, Exception, IOException {
-    if ((args.length > 0) && args[0].equals("create"))
-      createNewKey();
-    else {
-      System.out.println("Type password:");
-      //byte[] input = new byte[255];
-      try {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String s = br.readLine();
-        Encryptor e = new Encryptor();
-        System.out.println("Encrypting: " + s);
-        s = e.encrypt(s);
-        System.out.println("Encrypted: " + s);
-        OutputStream out = new FileOutputStream("pwd.enc");
-        out.write(s.getBytes());
-        out.flush();
-        out.close();
-        s = e.decrypt(s);
-        System.out.println("Back: " + s);
-      }
-      catch (Exception e1) {
-        e1.printStackTrace();
-      }
-    }
   }
 
   public final String encode64(byte[] d) {
