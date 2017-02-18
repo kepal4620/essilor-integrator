@@ -236,17 +236,17 @@ public class TestClient {
 				.append("110")
 				.append("N") // overeni
 				.append("N") // prvni zaslani
-				.append("000001112.11")
-				.append("000002222.22")
-				.append("000003333.33")
-				.append("000004444.44")
-				.append("-00005555.55")
+				.append("000000099.00")
+				.append("000000000.83")
+				.append("000000000.33")
+				.append("000000000.00")
+				.append("000005000.00")
 				.append("2017-02-11 21:30:00")
 				.append("0209300007")
 				.append("002")
 				.append("01")
 				.append("012345678901234567890123456789")
-				.append("SV");
+				.append("ZL");
 
 
 		os.write(sb.toString().getBytes("UTF-8"), 0, 131);

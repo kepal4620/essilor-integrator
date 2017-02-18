@@ -3,6 +3,7 @@ package essilor.integrator.adapter;
 import essilor.integrator.adapter.domain.eet.EetConfigInfo;
 import essilor.integrator.adapter.service.eet.EetConfigurationService;
 import essilor.integrator.adapter.tools.Encryptor;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -15,11 +16,14 @@ import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
 import org.springframework.ws.soap.security.wss4j.Wss4jSecurityInterceptor;
 import org.springframework.ws.soap.security.wss4j.support.CryptoFactoryBean;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
 public class EetConfiguration {
+
+    private static final Logger logger = Logger.getLogger(EetConfiguration.class);
 
     @Autowired
     private EetConfigurationService configurationService;
@@ -33,12 +37,6 @@ public class EetConfiguration {
     @Autowired
     private Jaxb2Marshaller eetServiceMarshaller;
 
-    @Value("${adapter.eet.keystoreType}")
-    private String keystoreType;
-
-    @Value("${adapter.uri.eet}")
-    private String eetUri;
-
     @Bean
     Map<String, EetConfigInfo> eetConfigMap() {
         return configurationService.getEetConfiguration();
@@ -46,6 +44,10 @@ public class EetConfiguration {
 
     @Bean
     Map<String, WebServiceTemplate> wsTemplateMap() throws Exception {
+        String eetUri = configurationService.getEetUri();
+        logger.info("eet ur: " + eetUri);
+        String keystoreType = configurationService.getEetKeystoreType();
+        logger.info("eet keystore type: " + keystoreType);
         Map<String, EetConfigInfo> eetConfig = configurationService.getEetConfiguration();
         Map<String, WebServiceTemplate> wsMap = new HashMap<>();
         for (EetConfigInfo eetConfigInfo : eetConfig.values()) {
@@ -54,14 +56,14 @@ public class EetConfiguration {
             wsTemplate.setUnmarshaller(eetServiceMarshaller);
             wsTemplate.setDefaultUri(eetUri);
             wsTemplate.setInterceptors(new ClientInterceptor[] {
-                    getWsSecurityInterceptor(eetConfigInfo)
+                    getWsSecurityInterceptor(eetConfigInfo, keystoreType)
             });
             wsMap.put(eetConfigInfo.getKod(), wsTemplate);
         }
         return wsMap;
     }
 
-    private Wss4jSecurityInterceptor getWsSecurityInterceptor(EetConfigInfo eetConfigInfo) throws Exception {
+    private Wss4jSecurityInterceptor getWsSecurityInterceptor(EetConfigInfo eetConfigInfo, String keystoreType) throws Exception {
         Wss4jSecurityInterceptor interceptor = new Wss4jSecurityInterceptor();
         interceptor.setSecurementActions("Signature");
         interceptor.setSecurementSignatureKeyIdentifier("DirectReference");

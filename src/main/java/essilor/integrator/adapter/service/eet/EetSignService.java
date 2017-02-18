@@ -23,11 +23,13 @@ public class EetSignService {
     private Map<String, EetConfigInfo> eetConfigMap;
     private Map<String, KeyStore> keyStoreMap;
 
-    @Value("${adapter.eet.keystoreType}")
     private String keystoreType;
 
     @Autowired
     private ApplicationContext applicationContext;
+
+    @Autowired
+    private EetConfigurationService configurationService;
 
     @Resource
     private void setEetConfigMap(Map<String, EetConfigInfo> eetConfigMap) {
@@ -39,6 +41,7 @@ public class EetSignService {
     public void postConstruct() {
         try {
             keyStoreMap = new HashMap<>();
+            keystoreType = configurationService.getEetKeystoreType();
             for (EetConfigInfo eetConfigInfo : eetConfigMap.values()) {
                 KeyStore keystore = KeyStore.getInstance(keystoreType);
                 keystore.load(applicationContext.getResource(eetConfigInfo.getKeystorePath()).getInputStream(),

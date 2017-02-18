@@ -70,7 +70,7 @@ public class EetDao {
                         ps.setString(2, result.getUsername()); // USERNAME
                         ps.setString(3, "1"); // SEND
                         ps.setString(4, result.getMethodName()); // METHOD_NAME
-                        ps.setString(5, ""); // UUID
+                        ps.setString(5, result.getUuid()); // UUID
                         ps.setString(
                                 6,
                                 dateFormat.get().format(

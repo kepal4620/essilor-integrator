@@ -2,12 +2,15 @@ package essilor.integrator.adapter.service.eet;
 
 
 import cz.mfcr.fs.eet.schema.v3.Odpoved;
+import cz.mfcr.fs.eet.schema.v3.OdpovedChybaType;
 import cz.mfcr.fs.eet.schema.v3.Trzba;
+import essilor.integrator.adapter.Adapter;
 import essilor.integrator.adapter.AdapterRequest;
 import essilor.integrator.adapter.Result;
 import essilor.integrator.adapter.dao.ConfDao;
 import essilor.integrator.adapter.domain.eet.EetConfigInfo;
 import essilor.integrator.adapter.service.OrderService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,8 @@ import java.util.Map;
 
 @Service
 public class EetService {
+
+    private static final Logger logger = Logger.getLogger(EetService.class);
 
     @Autowired
     private EetConnector eetConnector;
@@ -72,7 +77,16 @@ public class EetService {
                 .withKod(request.getEetData().getKod())
                 .build();
 
-        Odpoved odpoved = eetConnector.sendTrzba(trzba, request.getEetData().getKod());
+        Odpoved odpoved = null;
+        try {
+            odpoved = eetConnector.sendTrzba(trzba, request.getEetData().getKod());
+        } catch(Exception e) {
+            logger.error(e.getMessage(), e);
+            odpoved = new Odpoved();
+            OdpovedChybaType t = new OdpovedChybaType();
+            t.setContent(e.getMessage());
+            odpoved.setChyba(t);
+        }
 
         EetResult result = (EetResult) eetResultBuilder.new Builder()
                 .withAdapterRequest(request)

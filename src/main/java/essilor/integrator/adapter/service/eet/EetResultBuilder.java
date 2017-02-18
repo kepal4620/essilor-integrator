@@ -65,27 +65,23 @@ public class EetResultBuilder  {
             if (trzba == null) {
                 throw new IllegalStateException("trzba is null");
             }
-            if (odpoved == null) {
-                throw new IllegalStateException("odpoved is null");
-            }
-
             EetResult eetResult = (EetResult) result;
-
+            eetResult.setMethodName(request.getMethodName().name());
             eetResult.setFirstSend(request.getEetData().isFirst() ? "A" : "N");
             eetResult.setVerification(request.getEetData().getMode());
             eetResult.setOrderNumber(request.getEetData().getPoradoveCisloDokladu());
             eetResult.setOrderGroup(request.getEetData().getSkupinaDokladu());
             eetResult.setPurchaseOrderNumber(request.getEetData().getSkupinaZakazok());
-            eetResult.setFik(odpoved.getPotvrzeni() == null ? "" : odpoved.getPotvrzeni().getFik());
+            eetResult.setFik((odpoved == null || odpoved.getPotvrzeni() == null) ? "" : odpoved.getPotvrzeni().getFik());
             eetResult.setPkp(Base64.encodeBase64String(trzba.getKontrolniKody().getPkp().getValue()));
             eetResult.setBkp(trzba.getKontrolniKody().getBkp().getValue());
             eetResult.setXmlInput(marshal(trzba));
-            eetResult.setXmlOutput(marshal(odpoved));
+            eetResult.setXmlOutput(odpoved == null ? "" : marshal(odpoved));
             eetResult.setUuid(trzba.getHlavicka().getUuidZpravy());
-            eetResult.setUsername(username);
+            eetResult.setUsername("eet");
             eetResult.setDirection("S");
-            eetResult.setErrorCode(odpoved.getChyba() == null ? "" : String.valueOf(odpoved.getChyba().getKod()));
-            eetResult.setErrorText(odpoved.getChyba() == null ? "" :odpoved.getChyba().getContent());
+            eetResult.setErrorCode((odpoved == null || odpoved.getChyba() == null) ? "" : String.valueOf(odpoved.getChyba().getKod()));
+            eetResult.setErrorText((odpoved == null || odpoved.getChyba() == null) ? "" : odpoved.getChyba().getContent());
             eetResult.setDataSourceName(request.getEetData().getDataSourceName());
         }
 

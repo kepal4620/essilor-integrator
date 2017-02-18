@@ -18,5 +18,7 @@ public interface ConfDao {
 	String getDic();
 	String getIdProvoz();
 	String getIdPokl();
+	String getEetUri();
+	String getEetKeystoreType();
 	Map<String, EetConfigInfo> getEetConfig();
 }

@@ -12,7 +12,7 @@ public class AdapterRequest {
 
 	public enum MethodName {
 		UploadCustomFile, GetOrderByPoNum, GetOrderByPoNum_2, GetOrderAsPDFByPoNum, UploadOrderByAction,
-		ValidateOrderFromPMS, GetSuppliers, Eet
+		ValidateOrderFromPMS, GetSuppliers, OdeslaniTrzby
 	};
 
 	public enum Manufacturer {
@@ -85,7 +85,7 @@ public class AdapterRequest {
 		}
 		req.methodName = determineMethod(s);
 		switch(req.methodName) {
-			case Eet:
+			case OdeslaniTrzby:
 				setValuesForEET(s, req);
 				break;
 			default:
@@ -110,7 +110,7 @@ public class AdapterRequest {
 		} else if ("040".equals(s.substring(0, 3))) {
 			return MethodName.GetSuppliers;
 		} else if ("110".equals(s.substring(0, 3))) {
-			return MethodName.Eet;
+			return MethodName.OdeslaniTrzby;
 		} else {
 			throw new IllegalStateException("Cannot determine adapter method");
 		}

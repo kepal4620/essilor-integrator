@@ -4,7 +4,6 @@ import essilor.integrator.adapter.AdapterRequest;
 import essilor.integrator.adapter.AdapterRequest.MethodName;
 import essilor.integrator.adapter.Result;
 import essilor.integrator.adapter.service.eet.EetReplyBuilder;
-import essilor.integrator.adapter.service.eet.EetResultBuilder;
 
 public abstract class AdapterReplyBuilder {
 
@@ -30,7 +29,7 @@ public abstract class AdapterReplyBuilder {
 			builder = new ValidateOrderFromPMSReplyBuilder();
 		}  else if (MethodName.GetSuppliers.equals(request.getMethodName())) {
 			builder = new GetSuppliersReplyBuilder();
-		} else if (MethodName.Eet.equals(request.getMethodName())) {
+		} else if (MethodName.OdeslaniTrzby.equals(request.getMethodName())) {
 			builder = new EetReplyBuilder();
 		}
 		

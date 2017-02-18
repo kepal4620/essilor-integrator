@@ -1,6 +1,5 @@
 package essilor.integrator.adapter.service.eet;
 
-import essilor.integrator.adapter.EetConfiguration;
 import essilor.integrator.adapter.dao.ConfDao;
 import essilor.integrator.adapter.domain.eet.EetConfigInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,4 +20,13 @@ public class EetConfigurationService {
     public Map<String, EetConfigInfo> getEetConfiguration() {
         return confDaoImpl.getEetConfig();
     }
+
+    public String getEetUri() {
+        return confDaoImpl.getEetUri();
+    }
+
+    public String getEetKeystoreType() {
+        return confDaoImpl.getEetKeystoreType();
+    }
+
 }

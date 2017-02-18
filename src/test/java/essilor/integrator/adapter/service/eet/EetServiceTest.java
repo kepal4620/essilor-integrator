@@ -2,13 +2,9 @@ package essilor.integrator.adapter.service.eet;
 
 import essilor.integrator.adapter.AdapterRequest;
 import essilor.integrator.adapter.EetDataBuilder;
-import essilor.integrator.adapter.Result;
-import essilor.integrator.adapter.service.AdapterService;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import javax.xml.bind.JAXBException;
 
 public class EetServiceTest {
     private static ClassPathXmlApplicationContext context = null;
@@ -24,13 +20,13 @@ public class EetServiceTest {
         StringBuilder sb = new StringBuilder()
                 .append("110")
                 .append("N") // overeni
-                .append("N") // prvni zaslani
+                .append("A") // prvni zaslani
                 .append("000000001.00")
-                .append("000000001.00")
-                .append("000000001.00")
-                .append("000000001.00")
-                .append("-00000001.00")
-                .append("2017-02-10 22:00:00")
+                .append("000000000.83")
+                .append("000000000.17")
+                .append("000000000.00")
+                .append("000000000.00")
+                .append("2017-02-17 22:31:00")
                 .append("0209300007")
                 .append("002")
                 .append("01")
@@ -39,7 +35,7 @@ public class EetServiceTest {
 
         AdapterRequest req = AdapterRequest.getEmptyRequest();
         req.setEetData(EetDataBuilder.newInstance().withRequest(sb.toString()).build());
-        req.setMethodName(AdapterRequest.MethodName.Eet);
+        req.setMethodName(AdapterRequest.MethodName.OdeslaniTrzby);
 
         EetService service = context.getBean("eetService",
                 EetService.class);
@@ -70,7 +66,7 @@ public class EetServiceTest {
 
         AdapterRequest req = AdapterRequest.getEmptyRequest();
         req.setEetData(EetDataBuilder.newInstance().withRequest(sb.toString()).build());
-        req.setMethodName(AdapterRequest.MethodName.Eet);
+        req.setMethodName(AdapterRequest.MethodName.OdeslaniTrzby);
 
         EetService service = context.getBean("eetService",
                 EetService.class);
@@ -101,7 +97,7 @@ public class EetServiceTest {
 
         AdapterRequest req = AdapterRequest.getEmptyRequest();
         req.setEetData(EetDataBuilder.newInstance().withRequest(sb.toString()).build());
-        req.setMethodName(AdapterRequest.MethodName.Eet);
+        req.setMethodName(AdapterRequest.MethodName.OdeslaniTrzby);
 
         EetService service = context.getBean("eetService",
                 EetService.class);

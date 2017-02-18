@@ -137,7 +137,7 @@ public class Adapter implements ApplicationContextAware {
 			case GetSuppliers:
 				result = service.getSuppliers(request);
 				break;
-			case Eet:
+			case OdeslaniTrzby:
 				result = eetService.processRequest(request);
 				break;
 			} // switch

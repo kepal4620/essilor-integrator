@@ -94,6 +94,14 @@ public class ConfDaoImpl implements ConfDao {
 		this.softwareOriginatorName = softwareOriginatorName;
 	}
 
+	public String getEetUri() {
+		return jdbcTemplate.queryForObject(SQL, String.class, "EET_URI");
+	}
+
+	public String getEetKeystoreType() {
+		return jdbcTemplate.queryForObject(SQL, String.class, "EET_KEYSTORE_TYPE");
+	}
+
 	public void setSoftwareSenderName(String softwareSenderName) {
 		this.softwareSenderName = softwareSenderName;
 	}
