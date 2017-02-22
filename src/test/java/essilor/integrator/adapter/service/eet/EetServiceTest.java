@@ -44,6 +44,34 @@ public class EetServiceTest {
     }
 
     @Test
+    public void testEetPing() throws Exception {
+        StringBuilder sb = new StringBuilder()
+                .append("110")
+                .append("A") // overeni
+                .append("A") // prvni zaslani
+                .append("000000001.00")
+                .append("000000000.83")
+                .append("000000000.17")
+                .append("000000000.00")
+                .append("000000000.00")
+                .append("2017-02-17 22:31:00")
+                .append("9999999999")
+                .append("999")
+                .append("99")
+                .append("012345678901234567890123456789")
+                .append("ZL");
+
+        AdapterRequest req = AdapterRequest.getEmptyRequest();
+        req.setEetData(EetDataBuilder.newInstance().withRequest(sb.toString()).build());
+        req.setMethodName(AdapterRequest.MethodName.OdeslaniTrzby);
+
+        EetService service = context.getBean("eetService",
+                EetService.class);
+
+        service.processRequest(req);
+    }
+
+    @Test
     public void testEet2() throws Exception {
         StringBuilder sb = new StringBuilder()
                 .append("110")

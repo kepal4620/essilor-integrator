@@ -94,9 +94,13 @@ public class EetService {
                 .withOdpoved(odpoved)
                 .buildResult();
 
-        orderService.updateOrderAfterEet(request, result);
-        logService.logResult(request, result);
+        if (!request.getEetData().isPingRequest()) {
+            orderService.updateOrderAfterEet(request, result);
+        } else {
+            logger.info("ping request, message uuid: " + trzba.getHlavicka().getUuidZpravy());
+        }
 
+        logService.logResult(request, result);
         return result;
     }
 }

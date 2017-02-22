@@ -153,4 +153,10 @@ public class EetData {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public boolean isPingRequest() {
+        return "9999999999".equals(poradoveCisloDokladu)
+                && "999".equals(skupinaDokladu)
+                    && "99".equals(skupinaZakazok);
+    }
 }
