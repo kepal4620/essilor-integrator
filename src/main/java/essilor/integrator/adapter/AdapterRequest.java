@@ -12,7 +12,7 @@ public class AdapterRequest {
 
 	public enum MethodName {
 		UploadCustomFile, GetOrderByPoNum, GetOrderByPoNum_2, GetOrderAsPDFByPoNum, UploadOrderByAction,
-		ValidateOrderFromPMS, GetSuppliers, OdeslaniTrzby
+		ValidateOrderFromPMS, GetSuppliers, OdeslaniTrzby, Ping
 	};
 
 	public enum Manufacturer {
@@ -88,6 +88,9 @@ public class AdapterRequest {
 			case OdeslaniTrzby:
 				setValuesForEET(s, req);
 				break;
+			case Ping:
+				setValuesForPing(s, req);
+				break;
 			default:
 				setDefaultValues(s, req);
 		}
@@ -111,6 +114,8 @@ public class AdapterRequest {
 			return MethodName.GetSuppliers;
 		} else if ("110".equals(s.substring(0, 3))) {
 			return MethodName.OdeslaniTrzby;
+		} else if ("998".equals(s.substring(0, 3))) {
+			return MethodName.Ping;
 		} else {
 			throw new IllegalStateException("Cannot determine adapter method");
 		}
@@ -227,6 +232,10 @@ public class AdapterRequest {
 		}
 		req.direction = Direction.SEND;
 		log.debug(req);
+	}
+
+	private static AdapterRequest setValuesForPing(String s, AdapterRequest adapterRequest) {
+		return adapterRequest;
 	}
 
 	@Override

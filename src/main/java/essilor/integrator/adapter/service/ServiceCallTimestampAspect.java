@@ -10,7 +10,8 @@ public class ServiceCallTimestampAspect {
 	private static final Logger logger = Logger.getLogger(ServiceCallTimestampAspect.class);
 	
 	@After("execution(* essilor.integrator.adapter.service.EssilorService.*(..)) ||" +
-			"execution(* essilor.integrator.adapter.service.eet.EetConnector.*(..))")
+			"execution(* essilor.integrator.adapter.service.eet.EetConnector.*(..)) ||" +
+	        "execution(* essilor.integrator.adapter.service.PingService.*(..))")
 	public void setDataSourceForAdapterService() {
 		long timestamp = System.currentTimeMillis();
 		logger.debug("Service call timestamp created: " + timestamp);

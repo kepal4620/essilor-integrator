@@ -40,6 +40,7 @@
     </bean>
 
     <context:component-scan base-package="essilor.integrator.adapter.service.eet"/>
+    <context:component-scan base-package="essilor.integrator.adapter.service"/>
     <context:component-scan base-package="essilor.integrator.adapter.dao.eet"/>
     <context:component-scan base-package="essilor.integrator.adapter.tools"/>
 

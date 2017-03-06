@@ -289,4 +289,26 @@ public class TestClient {
 		System.out.println("received: " + str);
 	}
 
+	@Test
+	public void testPing() throws Exception {
+		Socket s = new Socket("localhost", 6900);
+		InputStream is = new BufferedInputStream(s.getInputStream(), 155);
+		OutputStream os = new BufferedOutputStream(s.getOutputStream(), 155);
+
+		StringBuilder sb = new StringBuilder()
+				.append("998")
+				.append("  ");
+		for (int i =0; i <152; i++) {
+			sb.append(" ");
+		}
+
+		os.write(sb.toString().getBytes("UTF-8"), 0, 155);
+		os.flush();
+		byte[] frame = new byte[1024];
+		is.read(frame, 0, 1024);
+		String str = new String(frame);
+		System.out.println("received: " + str);
+
+	}
+
 }

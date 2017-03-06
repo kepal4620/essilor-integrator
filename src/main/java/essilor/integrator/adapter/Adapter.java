@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 
+import essilor.integrator.adapter.service.PingService;
 import essilor.integrator.adapter.service.eet.EetService;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -39,6 +40,9 @@ public class Adapter implements ApplicationContextAware {
 
 	@Autowired
 	private EetService eetService;
+
+	@Autowired
+	private PingService pingService;
 
 	public int getPort() {
 		return port;
@@ -139,6 +143,9 @@ public class Adapter implements ApplicationContextAware {
 				break;
 			case OdeslaniTrzby:
 				result = eetService.processRequest(request);
+				break;
+				case Ping:
+				result = pingService.processRequest(request);
 				break;
 			} // switch
 

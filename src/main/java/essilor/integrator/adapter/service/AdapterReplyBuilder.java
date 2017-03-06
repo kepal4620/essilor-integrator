@@ -4,6 +4,7 @@ import essilor.integrator.adapter.AdapterRequest;
 import essilor.integrator.adapter.AdapterRequest.MethodName;
 import essilor.integrator.adapter.Result;
 import essilor.integrator.adapter.service.eet.EetReplyBuilder;
+import essilor.integrator.adapter.service.eet.PingReplyBuilder;
 
 public abstract class AdapterReplyBuilder {
 
@@ -31,6 +32,8 @@ public abstract class AdapterReplyBuilder {
 			builder = new GetSuppliersReplyBuilder();
 		} else if (MethodName.OdeslaniTrzby.equals(request.getMethodName())) {
 			builder = new EetReplyBuilder();
+		} else if (MethodName.Ping.equals(request.getMethodName())) {
+			builder = new PingReplyBuilder();
 		}
 		
 		builder.request = request;
