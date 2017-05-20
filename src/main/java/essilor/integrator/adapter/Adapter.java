@@ -7,9 +7,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import essilor.integrator.adapter.service.PingService;
 import essilor.integrator.adapter.service.eet.EetService;
@@ -33,7 +32,8 @@ public class Adapter implements ApplicationContextAware {
 
 	private final ExecutorService exec = Executors.newFixedThreadPool(10);
 	private int port;
-	
+
+	private AtomicBoolean shallStop = new AtomicBoolean(false);
 	private ApplicationContext ctx;
 
 	private AdapterService service;
@@ -74,7 +74,9 @@ public class Adapter implements ApplicationContextAware {
 		ServerSocket socket = new ServerSocket(port);
 		while (!exec.isShutdown()) {
 			try {
+				System.out.print("halo 1.");
 				final Socket conn = socket.accept();
+				System.out.print("halo 2.");
 				exec.execute(new Runnable() {
 					@Override
 					public void run() {
@@ -84,7 +86,11 @@ public class Adapter implements ApplicationContextAware {
 							logger.error(e);
 						}
 					}
-				});
+				} );
+				System.out.print("halo 3.");
+				if (shallStop.get() == true) {
+				    break;
+                }
 			} catch (RejectedExecutionException e) {
 				if (!exec.isShutdown()) {
 					logger.error(e);
@@ -92,11 +98,29 @@ public class Adapter implements ApplicationContextAware {
 			}
 		}
 		logger.info("Adapter finished");
-
 	}
 
-	public void stop() {
-		exec.shutdown();
+    void shutdownAndAwaitTermination() {
+        exec.shutdown(); // Disable new tasks from being submitted
+        try {
+            // Wait a while for existing tasks to terminate
+            if (!exec.awaitTermination(60, TimeUnit.SECONDS)) {
+                exec.shutdownNow(); // Cancel currently executing tasks
+                // Wait a while for tasks to respond to being cancelled
+                if (!exec.awaitTermination(60, TimeUnit.SECONDS))
+                    System.err.println("Pool did not terminate");
+            }
+        } catch (InterruptedException ie) {
+            // (Re-)Cancel if current thread also interrupted
+            exec.shutdownNow();
+            // Preserve interrupt status
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    public void stop() {
+//	    shutdownAndAwaitTermination();
+        shallStop.set(true);
 	}
 
 	void handleRequest(Socket conn) throws IOException {

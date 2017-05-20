@@ -23,6 +23,8 @@ public class EetService {
 
     private static final Logger logger = Logger.getLogger(EetService.class);
 
+    private static final int REZIM = 0;
+
     @Autowired
     private EetConnector eetConnector;
 
@@ -73,7 +75,7 @@ public class EetService {
                 .withZaklDan1(request.getEetData().getZaklDan1())
                 .withZaklDan2(request.getEetData().getZaklDan2())
                 .withDan2(request.getEetData().getDan2())
-                .withRezim(1)
+                .withRezim(REZIM)
                 .withKod(request.getEetData().getKod())
                 .build();
 
