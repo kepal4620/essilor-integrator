@@ -29,6 +29,8 @@ public class ConfDaoImpl implements ConfDao {
 	
 	private String softwareSenderVersion;
 
+	private String a1;
+
 	public ConfDaoImpl(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
