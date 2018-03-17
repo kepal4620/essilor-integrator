@@ -33,6 +33,8 @@ public class ConfDaoImpl implements ConfDao {
 
 	private String b1;
 
+    private String c1;
+
 	public ConfDaoImpl(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
