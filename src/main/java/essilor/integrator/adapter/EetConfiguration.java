@@ -2,10 +2,8 @@ package essilor.integrator.adapter;
 
 import essilor.integrator.adapter.domain.eet.EetConfigInfo;
 import essilor.integrator.adapter.service.eet.EetConfigurationService;
-import essilor.integrator.adapter.tools.Encryptor;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +14,6 @@ import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
 import org.springframework.ws.soap.security.wss4j.Wss4jSecurityInterceptor;
 import org.springframework.ws.soap.security.wss4j.support.CryptoFactoryBean;
 
-import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +29,7 @@ public class EetConfiguration {
     private ApplicationContext applicationContext;
 
     @Autowired
-    private SaajSoapMessageFactory messageFactory;
+    private SaajSoapMessageFactory eetMessageFactory;
 
     @Autowired
     private Jaxb2Marshaller eetServiceMarshaller;
@@ -51,7 +48,7 @@ public class EetConfiguration {
         Map<String, EetConfigInfo> eetConfig = configurationService.getEetConfiguration();
         Map<String, WebServiceTemplate> wsMap = new HashMap<>();
         for (EetConfigInfo eetConfigInfo : eetConfig.values()) {
-            WebServiceTemplate wsTemplate = new WebServiceTemplate(messageFactory);
+            WebServiceTemplate wsTemplate = new WebServiceTemplate(eetMessageFactory);
             wsTemplate.setMarshaller(eetServiceMarshaller);
             wsTemplate.setUnmarshaller(eetServiceMarshaller);
             wsTemplate.setDefaultUri(eetUri);

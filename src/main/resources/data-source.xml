@@ -18,28 +18,26 @@
 	</bean>
 
 	<bean id="parentDataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		class="essilor.integrator.adapter.datasource.CustomDriverManagerDataSource"
 		abstract="true">
 	</bean>
 
 	<bean id="zlDataSource"
-		class="essilor.integrator.adapter.datasource.CustomDriverManagerDataSource"
 		parent="parentDataSource">
 		<property name="url" value="${zl.jdbc.url}" />
 		<property name="username" value="${zl.jdbc.username}" />
 		<property name="password" value="${zl.jdbc.password}" />
 		<property name="driverClassName" value="${zl.jdbc.driverClassName}" />
-		<property name="encrypt" value="false"/>
+		<property name="encrypt" value="true"/>
 	</bean>
 
 	<bean id="lhDataSource"
-		class="essilor.integrator.adapter.datasource.CustomDriverManagerDataSource"
 		parent="parentDataSource">
 		<property name="url" value="${lh.jdbc.url}" />
 		<property name="username" value="${lh.jdbc.username}" />
 		<property name="password" value="${lh.jdbc.password}" />
 		<property name="driverClassName" value="${lh.jdbc.driverClassName}" />
-		<property name="encrypt" value="false"/>
+		<property name="encrypt" value="true"/>
 	</bean>
 
 <!-- 	<bean id="vsDataSource" -->
